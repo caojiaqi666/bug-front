@@ -1,103 +1,211 @@
 <template>
   <div class="login-container">
-    <!-- <canvas>您的浏览器版本过低，请升级！！！</canvas> -->
-    <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
-      autocomplete="on"
-      label-position="left"
-    >
-      <div class="title-container">
-        <h3 class="title">Login Form</h3>
-      </div>
-
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <i class="el-icon-user-solid"></i>
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-        />
-      </el-form-item>
-
-      <el-tooltip
-        v-model="capsTooltip"
-        content="Caps lock is On"
-        placement="right"
-        manual
+    <div class="login" v-if="loginStatus">
+      <el-form
+        ref="loginForm"
+        class="login-form"
+        :model="loginForm"
+        :rules="loginRules"
+        autocomplete="on"
+        label-position="left"
       >
-        <el-form-item prop="password">
+        <div class="title-container">
+          <h3 class="title">Login Form</h3>
+        </div>
+
+        <el-form-item prop="username">
           <span class="svg-container">
-            <i class="el-icon-unlock"></i>
+            <i class="el-icon-user-solid"></i>
           </span>
           <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            placeholder="Password"
-            name="password"
-            tabindex="2"
+            ref="username"
+            v-model="loginForm.username"
+            placeholder="请输入用户名"
+            name="username"
+            type="text"
+            tabindex="1"
             autocomplete="on"
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
           />
-          <span class="show-pwd" @click="showPwd">
-            <i class="el-icon-view"></i>
-          </span>
         </el-form-item>
-      </el-tooltip>
 
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width: 100%; margin-bottom: 30px"
-        @click.native.prevent="handleLogin"
-        >登录</el-button
-      >
-
-      <div style="position: relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right: 18px">Username : editor</span>
-          <span>Password : any</span>
-        </div>
+        <el-tooltip
+          v-model="capsTooltip"
+          content="Caps lock is On"
+          placement="right"
+          manual
+        >
+          <el-form-item prop="password">
+            <span class="svg-container">
+              <i class="el-icon-unlock"></i>
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="password"
+              v-model="loginForm.password"
+              :type="passwordType"
+              placeholder="请输入密码"
+              name="password"
+              tabindex="2"
+              autocomplete="on"
+              @keyup.native="checkCapslock"
+              @blur="capsTooltip = false"
+              @keyup.enter.native="debounce(handleLogin)"
+            />
+            <span class="show-pwd" @click="showPwd">
+              <i class="el-icon-view"></i>
+            </span>
+          </el-form-item>
+        </el-tooltip>
 
         <el-button
-          class="thirdparty-button"
+          :loading="loading"
           type="primary"
-          @click="showDialog = true"
+          style="width: 100%; margin-bottom: 30px"
+          @click.native.prevent="debounce(handleLogin)"
+          >登录</el-button
         >
-          Or connect with
-        </el-button>
-      </div>
-    </el-form>
 
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business
-      simulation! ! !
-      <br />
-      <br />
-      <br />
-      <social-sign />
-    </el-dialog>
+        <div style="position: relative">
+          <div class="tips">
+            <span>Username : admin</span>
+            <span>Password : any</span>
+          </div>
+          <div class="tips">
+            <span style="margin-right: 18px">Username : editor</span>
+            <span>Password : any</span>
+          </div>
+
+          <el-button
+            class="thirdparty-button"
+            type="primary"
+            @click="loginStatus = false"
+          >
+            去注册
+          </el-button>
+        </div>
+      </el-form>
+    </div>
+    <div class="register" v-else>
+      <el-form
+        ref="registerForm"
+        :model="registerForm"
+        :rules="registerRules"
+        class="login-form"
+        autocomplete="on"
+        label-position="left"
+      >
+        <div class="title-container">
+          <h3 class="title">Register Form</h3>
+        </div>
+
+        <el-form-item prop="username">
+          <span class="svg-container">
+            <i class="el-icon-user-solid"></i>
+          </span>
+          <el-input
+            ref="username"
+            v-model="registerForm.username"
+            placeholder="请输入用户名"
+            name="username"
+            type="text"
+            tabindex="1"
+            autocomplete="on"
+          />
+        </el-form-item>
+
+        <el-tooltip
+          v-model="capsTooltip"
+          content="Caps lock is On"
+          placement="right"
+          manual
+        >
+          <el-form-item prop="password1">
+            <span class="svg-container">
+              <i class="el-icon-unlock"></i>
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="password1"
+              v-model="registerForm.password1"
+              :type="passwordType"
+              placeholder="请输入密码"
+              name="password"
+              tabindex="2"
+              autocomplete="on"
+              @keyup.native="checkCapslock"
+              @blur="capsTooltip = false"
+              @keyup.enter.native="handleLogin"
+            />
+            <span class="show-pwd" @click="showPwd">
+              <i class="el-icon-view"></i>
+            </span>
+          </el-form-item>
+        </el-tooltip>
+
+        <el-tooltip
+          v-model="capsTooltip"
+          content="Caps lock is On"
+          placement="right"
+          manual
+        >
+          <el-form-item prop="password">
+            <span class="svg-container">
+              <i class="el-icon-unlock"></i>
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="password2"
+              v-model="registerForm.password2"
+              :type="passwordType"
+              placeholder="请再次输入密码"
+              name="password"
+              tabindex="2"
+              autocomplete="on"
+              @keyup.native="checkCapslock"
+              @blur="capsTooltip = false"
+              @keyup.enter.native="debounce(handleLogin)"
+            />
+            <span class="show-pwd" @click="showPwd">
+              <i class="el-icon-view"></i>
+            </span>
+          </el-form-item>
+        </el-tooltip>
+
+        <el-button
+          :loading="loading"
+          type="primary"
+          style="width: 100%; margin-bottom: 30px"
+          @click.native.prevent="debounce(handleRegister)"
+          >注册</el-button
+        >
+
+        <div style="position: relative">
+          <div class="tips">
+            <span>Username : admin</span>
+            <span>Password : any</span>
+          </div>
+          <div class="tips">
+            <span style="margin-right: 18px">Username : editor</span>
+            <span>Password : any</span>
+          </div>
+
+          <el-button
+            class="thirdparty-button"
+            type="primary"
+            @click="loginStatus = true"
+          >
+            去登录
+          </el-button>
+        </div>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import { validUsername } from "@/utils/validate";
+import * as API from "@/api/index";
+import {debounce} from "@/utils/index"
 export default {
   name: "Login",
   components: {},
@@ -116,10 +224,35 @@ export default {
         callback();
       }
     };
+    const validatePass1 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.registerForm.checkPass !== "") {
+          this.$refs.registerForm.validateField("checkPass");
+        }
+        callback();
+      }
+    };
+    const validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.registerForm.pass) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
+      loginStatus: true,
       loginForm: {
         username: "admin",
         password: "111111",
+      },
+      registerForm: {
+        username: "",
+        password1: "",
+        password2: "",
       },
       loginRules: {
         username: [
@@ -127,6 +260,17 @@ export default {
         ],
         password: [
           { required: true, trigger: "blur", validator: validatePassword },
+        ],
+      },
+      registerRules: {
+        username: [
+          { required: true, trigger: "blur", validator: validateUsername },
+        ],
+        password1: [
+          { required: true, trigger: "blur", validator: validatePass1 },
+        ],
+        password2: [
+          { required: true, trigger: "blur", validator: validatePass2 },
         ],
       },
       passwordType: "password",
@@ -154,9 +298,9 @@ export default {
   },
   mounted() {
     if (this.loginForm.username === "") {
-      this.$refs.username.focus();
+      this.$refs.username1.focus();
     } else if (this.loginForm.password === "") {
-      this.$refs.password.focus();
+      this.$refs.password1.focus();
     }
   },
   destroyed() {
@@ -174,14 +318,102 @@ export default {
         this.passwordType = "password";
       }
       this.$nextTick(() => {
-        this.$refs.password.focus();
+        this.$refs.password1.focus();
       });
     },
     handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
+          const { username, password } = this.loginForm;
           this.loading = true;
-          console.log(this.loginForm);
+          let res = await API.toLogin({ username, passwd: password });
+          if (res?.status == 200) {
+            if (res?.data?.state == 0) {
+              this.$message.destroyed();
+              this.$message({
+                message: "恭喜你，登录成功",
+                type: "success",
+              });
+              this.$router.push("/");
+            } else if (res?.data?.state == 1) {
+              this.$message.destroyed();
+              this.$message({
+                message: "用户名不存在",
+                type: "warning",
+              });
+            } else if (res?.data?.state == 2) {
+              this.$message.destroyed();
+              this.$message({
+                message: "用户名或密码错误",
+                type: "error",
+              });
+            } else {
+              this.$message.destroyed();
+              this.$message({
+                message: res?.msg || "未知错误",
+                type: "error",
+              });
+            }
+          } else {
+            this.$message.destroyed();
+            this.$message({
+              message: "服务器错误",
+              type: "error",
+            });
+          }
+          this.loading = false;
+          // this.$store
+          //   .dispatch("user/login", this.loginForm)
+          //   .then(() => {
+          //     this.$router.push({
+          //       path: this.redirect || "/",
+          //       query: this.otherQuery,
+          //     });
+          //     this.loading = false;
+          //   })
+          //   .catch(() => {
+          //     this.loading = false;
+          //   });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    handleRegister() {
+      this.$refs.registerForm.validate(async (valid) => {
+        if (valid) {
+          const { username, password } = this.registerForm;
+          this.loading = true;
+          let res = await API.toRegister({ username, passwd: password });
+          if (res?.status == 200) {
+            if (res?.data?.state == 0) {
+              this.$message.destroyed();
+              this.$message({
+                message: "注册成功，请登录",
+                type: "success",
+              });
+            } else if (res?.data?.state == 1) {
+              this.$message.destroyed();
+              this.$message({
+                message: "用户名已存在",
+                type: "warning",
+              });
+            } else {
+              this.$message.destroyed();
+              this.$message({
+                message: res?.data?.msg || "未知错误",
+                type: "error",
+              });
+            }
+          } else {
+            this.$message.destroyed();
+            this.$message({
+              message: "服务器错误",
+              type: "error",
+            });
+          }
+          this.loading = false;
           // this.$store
           //   .dispatch("user/login", this.loginForm)
           //   .then(() => {
