@@ -21,6 +21,7 @@ export default new Vuex.Store({
   },
   mutations: {
     LOGIN(state, value) {
+      console.log('触发loginvalue: ', value);
       state.userInfo = value;
     },
     LOGOUT(state, value) {

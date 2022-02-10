@@ -335,7 +335,10 @@ export default {
                 message: "恭喜你，登录成功",
                 type: "success",
               });
-              this.$router.push("/");
+              // 更新vuex
+              this.$store.dispatch("login", res?.data?.user);
+              console.log('res?.data: ', res?.data?.user);
+              // this.$router.push("/");
             } else if (res?.data?.state == 1) {
               this.$message.close();
               this.$message({
@@ -394,8 +397,6 @@ export default {
                 message: "注册成功，请登录",
                 type: "success",
               });
-              // 更新vuex
-              this.$store.dispatch("login", res?.data?.user);
             } else if (res?.data?.state == 1) {
               this.$message.close();
               this.$message({

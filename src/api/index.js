@@ -19,3 +19,21 @@ export const toRegister = async (data) => {
     data,
   });
 };
+
+// 添加用户
+export const addUser = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/addUser`,
+    data,
+  });
+};
+
+// 查询用户列表
+export const selectUser = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/selectUser`,
+    data,
+  });
+};

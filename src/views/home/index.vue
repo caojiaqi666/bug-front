@@ -3,7 +3,9 @@
     <AsideMenu />
     <div class="right">
       <NavBar />
-      <router-view />
+      <div class="wrap">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +25,9 @@ export default {
   flex-direction: row;
   .right {
     width: 100%;
+    .wrap {
+      margin: 15px 20px;
+    }
   }
 }
 </style>
