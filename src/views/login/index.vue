@@ -205,7 +205,7 @@
 <script>
 import { validUsername } from "@/utils/validate";
 import * as API from "@/api/index";
-import {debounce} from "@/utils/index"
+import { debounce } from "@/utils/index";
 export default {
   name: "Login",
   components: {},
@@ -307,6 +307,7 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    debounce,
     checkCapslock(e) {
       const { key } = e;
       this.capsTooltip = key && key.length === 1 && key >= "A" && key <= "Z";
@@ -329,33 +330,33 @@ export default {
           let res = await API.toLogin({ username, passwd: password });
           if (res?.status == 200) {
             if (res?.data?.state == 0) {
-              this.$message.destroyed();
+              this.$message.close();
               this.$message({
                 message: "恭喜你，登录成功",
                 type: "success",
               });
               this.$router.push("/");
             } else if (res?.data?.state == 1) {
-              this.$message.destroyed();
+              this.$message.close();
               this.$message({
                 message: "用户名不存在",
                 type: "warning",
               });
             } else if (res?.data?.state == 2) {
-              this.$message.destroyed();
+              this.$message.close();
               this.$message({
                 message: "用户名或密码错误",
                 type: "error",
               });
             } else {
-              this.$message.destroyed();
+              this.$message.close();
               this.$message({
                 message: res?.msg || "未知错误",
                 type: "error",
               });
             }
           } else {
-            this.$message.destroyed();
+            this.$message.close();
             this.$message({
               message: "服务器错误",
               type: "error",
@@ -388,26 +389,28 @@ export default {
           let res = await API.toRegister({ username, passwd: password });
           if (res?.status == 200) {
             if (res?.data?.state == 0) {
-              this.$message.destroyed();
+              this.$message.close();
               this.$message({
                 message: "注册成功，请登录",
                 type: "success",
               });
+              // 更新vuex
+              this.$store.dispatch("login", res?.data?.user);
             } else if (res?.data?.state == 1) {
-              this.$message.destroyed();
+              this.$message.close();
               this.$message({
                 message: "用户名已存在",
                 type: "warning",
               });
             } else {
-              this.$message.destroyed();
+              this.$message.close();
               this.$message({
                 message: res?.data?.msg || "未知错误",
                 type: "error",
               });
             }
           } else {
-            this.$message.destroyed();
+            this.$message.close();
             this.$message({
               message: "服务器错误",
               type: "error",

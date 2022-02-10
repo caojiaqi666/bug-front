@@ -5,7 +5,7 @@
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
-      :collapse="isCollapse"
+      :collapse="$store.state.isCollapse"
       :background-color="variables.menuBg"
       :text-color="variables.menuText"
       :active-text-color="variables.menuActiveText"
@@ -63,7 +63,6 @@ export default {
   name: "AsideMenu",
   data() {
     return {
-      isCollapse: false,
       defaultActive: "1-1"
     };
   },
@@ -80,6 +79,8 @@ export default {
       return variables;
     },
   },
+  mounted() {
+  }
 };
 </script>
 
@@ -89,7 +90,6 @@ export default {
   min-height: 400px;
 }
 .menuBox {
-  width: 200px;
   height: 1000px;
   background: #304156;
 }
