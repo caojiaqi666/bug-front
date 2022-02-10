@@ -22,12 +22,16 @@
       <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-location"></i>
-          <span slot="title">权限管理</span>
+          <span slot="title">用户管理</span>
         </template>
-        <el-menu-item index="2-1">成员管理</el-menu-item>
-        <el-menu-item index="2-2">客户管理</el-menu-item>
+        <el-menu-item index="2-1">用户组</el-menu-item>
+        <el-menu-item index="2-2">成员管理</el-menu-item>
+        <el-menu-item index="2-3">添加用户</el-menu-item>
+        <el-menu-item index="2-4">修改密码</el-menu-item>
+        <el-menu-item index="2-5">修改头像</el-menu-item>
+        <el-menu-item index="2-6">修改用户名</el-menu-item>
+        <el-menu-item index="2-7">修改邮箱</el-menu-item>
       </el-submenu>
-
       <el-submenu index="3">
         <template slot="title">
           <i class="el-icon-location"></i>
@@ -44,6 +48,10 @@
           <i class="el-icon-location"></i>
           <span slot="title">缺陷管理</span>
         </template>
+        <el-menu-item index="4-1">创建任务</el-menu-item>
+        <el-menu-item index="4-2">我的创建</el-menu-item>
+        <el-menu-item index="4-3">所有任务</el-menu-item>
+        <el-menu-item index="4-4">我的任务</el-menu-item>
       </el-submenu>
       <el-menu-item index="5">
         <i class="el-icon-setting"></i>
@@ -51,7 +59,7 @@
       </el-menu-item>
       <el-menu-item index="6">
         <i class="el-icon-setting"></i>
-        <span slot="title">更多应用</span>
+        <span slot="title">系统设置</span>
       </el-menu-item>
     </el-menu>
   </div>
