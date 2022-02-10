@@ -1,7 +1,10 @@
 <template>
   <div class="homeBox">
     <AsideMenu />
-    <NavBar />
+    <div class="right">
+      <NavBar />
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -15,7 +18,11 @@ export default {
 
 <style lang="scss" scoped>
 .homeBox {
+  height: 100%;
   display: flex;
   flex-direction: row;
+  .right {
+    width: 100%;
+  }
 }
 </style>

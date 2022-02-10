@@ -98,7 +98,7 @@ export default {
   min-height: 400px;
 }
 .menuBox {
-  height: 1000px;
+  height: 100%;
   background: #304156;
 }
 </style>
