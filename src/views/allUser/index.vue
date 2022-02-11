@@ -6,6 +6,33 @@
       </p>
     </div>
 
+    <div class="control">
+      <div class="control-item">
+        <span>用户id：</span>
+        <el-input v-model="searchId" placeholder="请输入内容"></el-input>
+      </div>
+      <div class="control-item">
+        <span>姓名：</span>
+        <el-input v-model="searchUsername" placeholder="请输入内容"></el-input>
+      </div>
+      <div class="control-item">
+        <span>职位：</span>
+        <el-select v-model="searchPower" placeholder="请选择">
+          <el-option
+            v-for="item in powerOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </div>
+
+      <div class="searchBtn">
+        <el-button @click="getuserList" type="primary">查询</el-button>
+      </div>
+    </div>
+
     <el-table
       v-loading="listLoading"
       :data="userlist"
@@ -21,9 +48,7 @@
       </el-table-column>
       <el-table-column label="日期" align="center">
         <template slot-scope="scope">
-          <span>{{
-            scope.row.createDate
-          }}</span>
+          <span>{{ scope.row.createDate }}</span>
         </template>
       </el-table-column>
 
@@ -42,13 +67,6 @@
       <el-table-column label="邮箱" class-name="status-col">
         <template slot-scope="scope">
           <span>{{ scope.row.email }}</span>
-          <!--<el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>-->
-        </template>
-      </el-table-column>
-      <el-table-column label="状态" class-name="status-col">
-        <template slot-scope="scope">
-          <span v-if="scope.row.disable == 0">启用</span>
-          <span v-else>禁用</span>
           <!--<el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>-->
         </template>
       </el-table-column>
@@ -71,25 +89,8 @@
             @click="handleChangeInfo(scope.row)"
             >更改信息
           </el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleRemove(scope.row.id)"
+          <el-button size="mini" type="danger" @click="handleRemove(scope.row)"
             >删除
-          </el-button>
-          <el-button
-            v-if="scope.row.disable == 1"
-            size="mini"
-            type="danger"
-            @click="handleDisable(scope.row)"
-            >启用
-          </el-button>
-          <el-button
-            v-else
-            size="mini"
-            type="danger"
-            @click="handleDisable(scope.row)"
-            >禁用
           </el-button>
         </template>
       </el-table-column>
@@ -103,25 +104,21 @@
       width="30%"
     >
       <el-form ref="postForm" />
-      <!--<el-button type="success" round @click="HandlerAddGroup">添加部门</el-button>-->
       <el-form ref="postForm">
-        <el-form-item label="昵称">
-          <el-input v-model="form.nickname" />
-        </el-form-item>
         <el-form-item label="真实姓名">
-          <el-input v-model="form.realname" />
+          <el-input v-model="changeForm.username" />
         </el-form-item>
         <el-form-item label="邮箱">
-          <el-input v-model="form.email" />
+          <el-input v-model="changeForm.email" />
         </el-form-item>
 
         <el-form-item label="职位：">
-          <el-select v-model="form.power" placeholder="Select">
+          <el-select v-model="changeForm.power" placeholder="请选择">
             <el-option
-              v-for="item in positionlist"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
+              v-for="item in powerOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
             />
           </el-select>
         </el-form-item>
@@ -131,13 +128,22 @@
         <el-button type="primary" @click="HandlerUpdate">确 定</el-button>
       </span>
     </el-dialog>
+    <el-pagination
+      class="pagination"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="pageNum"
+      :page-sizes="[10, 20, 50]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="totalNum"
+    >
+    </el-pagination>
   </div>
 </template>
 
 <script>
-// import { userList, resetPwd, updateUser, userRemove, userDisable } from "@/api/user";
 import * as API from "@/api";
-// import { getPositionKeyName } from "@/api/position";
 
 export default {
   name: "Usermanager",
@@ -161,10 +167,7 @@ export default {
       dialogVisible: false,
       positionlist: [],
       userlist: [],
-      form: {
-        id: 0,
-        name: "",
-      },
+      changeForm: {},
       statusgroup: [],
       positionMap: new Map(),
       listLoading: false,
@@ -172,6 +175,26 @@ export default {
         { label: "ID Ascending", key: "+id" },
         { label: "ID Descending", key: "-id" },
       ],
+      powerOptions: [
+        {
+          value: 0,
+          label: "系统管理员",
+        },
+        {
+          value: 1,
+          label: "研发及测试人员",
+        },
+        {
+          value: 2,
+          label: "普通人员",
+        },
+      ],
+      searchId: "",
+      searchUsername: "",
+      searchPower: "",
+      pageSize: 10,
+      pageNum: 1,
+      totalNum: 10,
     };
   },
   activated() {
@@ -186,15 +209,8 @@ export default {
       this.dialogVisible = false;
     },
     HandlerUpdate() {
-      updateUser(this.form).then((_) => {
-        const l = this.userlist.length;
-        for (let i = 0; i < l; i++) {
-          if (this.userlist[i].id === this.form.id) {
-            this.userlist[i].role = this.form.name;
-          }
-        }
-        this.$message.success("修改成功");
-      });
+      this.changeInfo(this.changeForm);
+      console.log("this.changeForm: ", this.changeForm);
       this.dialogVisible = false;
     },
     handleClose() {
@@ -202,74 +218,43 @@ export default {
     },
     async getuserList() {
       let res = await API.selectUser({
-        id: "",
-        username: "",
-        power: 0,
-        pageNum: 1,
-        pageSize: 10,
+        id: this.searchId,
+        username: this.searchUsername,
+        power: this.searchPower,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
       });
+      this.totalNum = res?.data?.total || 0;
       if (res?.status === 200) {
-        this.userlist = res?.data?.userList  || [];
-      console.log("res: ", this.userlist );
+        this.userlist = res?.data?.userList || [];
+        console.log("res: ", this.userlist);
       } else {
         this.$message.error(res?.data?.msg || "服务器错误");
       }
     },
     handleChangeInfo(row) {
-      this.form = row;
+      this.changeForm._id = row._id;
       this.dialogVisible = true;
     },
-    handleRemove(id) {
-      this.$confirm("此操作将关闭bug, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(() => {
-          userRemove(id).then((_) => {
-            const l = this.userlist.length;
-            for (let i = 0; i < l; i++) {
-              if (this.userlist[i].id === id) {
-                this.userlist.splice(i, 1);
-              }
-            }
-            this.$message.warning("删除成功");
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
-    },
-    handleDisable(row) {
-      userDisable(row.id).then((_) => {
-        const l = this.userlist.length;
-        for (let i = 0; i < l; i++) {
-          if (this.userlist[i].id === row.id) {
-            this.userlist[i].disable = Math.abs(this.userlist[i].disable - 1);
-            break;
-          }
-        }
-      });
+    handleRemove(row) {
+      console.log('row._id: ', row._id);
+      this.deleteUser(row._id);
+      
     },
     handleResetPwd(row) {
+      console.log("row: ", row);
       this.$prompt("请输入密码", "提示", {
         cancelButtonText: "取消",
         confirmButtonText: "确定",
       })
         .then(({ value }) => {
+          console.log(row, value);
           const data = {
-            id: row.id,
-            newpassword: value,
+            _id: row._id,
+            passwd: value,
           };
-          resetPwd(data).then((_) => {
-            this.$message({
-              type: "success",
-              message: "你的密码是: " + value,
-            });
-          });
+          console.log("data: ", data);
+          this.changeInfo(data);
         })
         .catch(() => {
           this.$message({
@@ -278,6 +263,50 @@ export default {
           });
         });
     },
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getuserList();
+    },
+    handleCurrentChange(val) {
+      this.pageNum = val;
+      this.getuserList();
+    },
+    async changeInfo(data) {
+      let res = API.changeInfo({ ...data });
+      if (res?.data?.state == 0) {
+        this.$message.success(res?.data?.msg || "操作成功");
+      } else {
+        this.$message.error(res?.data?.msg || "操作失败");
+      }
+    },
+    async deleteUser(_id) {
+      let res = API.deleteUser({ _id });
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.pagination {
+  float: right;
+  margin-top: 20px;
+}
+.control {
+  display: flex;
+  margin: 20px 0px;
+}
+.control-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-right: 30px;
+  font-size: 16px;
+  span {
+    width: 100px;
+  }
+}
+.searchBtn {
+  margin-left: auto;
+}
+</style>

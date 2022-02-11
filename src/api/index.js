@@ -37,3 +37,21 @@ export const selectUser = async (data) => {
     data,
   });
 };
+
+// 修改用户信息
+export const changeInfo = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/changeInfo`,
+    data,
+  });
+};
+
+// 删除用户
+export const deleteUser = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/deleteUser`,
+    data,
+  });
+};
