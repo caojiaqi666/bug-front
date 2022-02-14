@@ -102,33 +102,33 @@ const routes = [
   //     },
   //   ],
   // },
-  // {
-  //   path: "/bug",
-  //   component: Home,
-  //   redirect: "/bug/create",
-  //   children: [
-  //     {
-  //       path: "create",
-  //       component: () => import("@/views/bug/create/index"),
-  //       name: "create",
-  //     },
-  //     {
-  //       path: "myCreate",
-  //       component: () => import("@/views/bug/myCreate/index"),
-  //       name: "myCreate",
-  //     },
-  //     {
-  //       path: "allTask",
-  //       component: () => import("@/views/bug/allTask/index"),
-  //       name: "allTask",
-  //     },
-  //     {
-  //       path: "myTask",
-  //       component: () => import("@/views/bug/myTask/index"),
-  //       name: "myTask",
-  //     },
-  //   ],
-  // },
+  {
+    path: "/bug",
+    component: Home,
+    redirect: "/bug/create",
+    children: [
+      {
+        path: "create",
+        component: () => import("@/views/bug/create/index"),
+        name: "create",
+      },
+      // {
+      //   path: "myCreate",
+      //   component: () => import("@/views/bug/myCreate/index"),
+      //   name: "myCreate",
+      // },
+      // {
+      //   path: "allTask",
+      //   component: () => import("@/views/bug/allTask/index"),
+      //   name: "allTask",
+      // },
+      // {
+      //   path: "myTask",
+      //   component: () => import("@/views/bug/myTask/index"),
+      //   name: "myTask",
+      // },
+    ],
+  },
   // {
   //   path: "/dataBoard",
   //   component: Home,

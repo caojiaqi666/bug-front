@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASEURL = "http://localhost:9527";
+const BASEURL = process.env.NODE_ENV === "development" ? "http://localhost:9527" : ""
 
 // 登录接口
 export const toLogin = async (data) => {
@@ -52,6 +52,15 @@ export const deleteUser = async (data) => {
   return await axios({
     method: "POST",
     url: `${BASEURL}/deleteUser`,
+    data,
+  });
+};
+
+// 创建bug任务
+export const createBug = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/createBug`,
     data,
   });
 };
