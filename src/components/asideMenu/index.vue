@@ -16,7 +16,8 @@
           <i class="el-icon-location"></i>
           <span slot="title">项目管理</span>
         </template>
-        <el-menu-item index="1-1">团队空间</el-menu-item>
+        <el-menu-item index="1-1">
+        <router-link to="/">团队空间</router-link></el-menu-item>
         <el-menu-item index="1-2">需求管理</el-menu-item>
       </el-submenu>
       <el-submenu index="2">
@@ -24,13 +25,13 @@
           <i class="el-icon-location"></i>
           <span slot="title">用户管理</span>
         </template>
-        <el-menu-item index="2-1">用户组</el-menu-item>
-        <el-menu-item index="2-2">成员管理</el-menu-item>
-        <el-menu-item index="2-3">添加用户</el-menu-item>
-        <el-menu-item index="2-4">修改密码</el-menu-item>
-        <el-menu-item index="2-5">修改头像</el-menu-item>
-        <el-menu-item index="2-6">修改用户名</el-menu-item>
-        <el-menu-item index="2-7">修改邮箱</el-menu-item>
+        <router-link to="/user/userGroup"><el-menu-item index="2-1">用户组</el-menu-item></router-link>
+        <router-link to="/user/allUser"><el-menu-item index="2-2">成员管理</el-menu-item></router-link>
+        <router-link to="/user/addUser"><el-menu-item index="2-3">添加用户</el-menu-item></router-link>
+        <router-link to="/user/changePwd"><el-menu-item index="2-4">修改密码</el-menu-item></router-link>
+        <router-link to="/user/changeAvatar"><el-menu-item index="2-5">修改头像</el-menu-item></router-link>
+        <router-link to="/user/"><el-menu-item index="2-6">修改用户名</el-menu-item></router-link>
+        <router-link to="/user/changeEmail"><el-menu-item index="2-7">修改邮箱</el-menu-item></router-link>
       </el-submenu>
       <el-submenu index="3">
         <template slot="title">

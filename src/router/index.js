@@ -6,6 +6,12 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/",
+    name: "home",
+    redirect: "/login",
+    component: () => import("@/views/login/index.vue"),
+  },
+  {
     path: "/login",
     name: "Login",
     component: () => import("@/views/login/index.vue"),
@@ -34,32 +40,32 @@ const routes = [
     children: [
       {
         path: "userGroup",
-        component: () => import("@/views/userGroup/index"),
+        component: () => import("@/views/user/userGroup/index"),
         name: "userGroup",
       },
       {
         path: "allUser",
-        component: () => import("@/views/allUser/index"),
+        component: () => import("@/views/user/allUser/index"),
         name: "allUser",
       },
       {
         path: "addUser",
-        component: () => import("@/views/addUser/index"),
+        component: () => import("@/views/user/addUser/index"),
         name: "addUser",
       },
       {
         path: "changePwd",
-        component: () => import("@/views/changePwd/index"),
+        component: () => import("@/views/user/changePwd/index"),
         name: "changePwd",
       },
       {
         path: "changeAvatar",
-        component: () => import("@/views/changeAvatar/index"),
+        component: () => import("@/views/user/changeAvatar/index"),
         name: "changeAvatar",
       },
       {
         path: "changeEmail",
-        component: () => import("@/views/changeEmail/index"),
+        component: () => import("@/views/user/changeEmail/index"),
         name: "changeEmail",
       },
     ],
@@ -103,22 +109,22 @@ const routes = [
   //   children: [
   //     {
   //       path: "create",
-  //       component: () => import("@/views/create/index"),
+  //       component: () => import("@/views/bug/create/index"),
   //       name: "create",
   //     },
   //     {
   //       path: "myCreate",
-  //       component: () => import("@/views/myCreate/index"),
+  //       component: () => import("@/views/bug/myCreate/index"),
   //       name: "myCreate",
   //     },
   //     {
   //       path: "allTask",
-  //       component: () => import("@/views/allTask/index"),
+  //       component: () => import("@/views/bug/allTask/index"),
   //       name: "allTask",
   //     },
   //     {
   //       path: "myTask",
-  //       component: () => import("@/views/myTask/index"),
+  //       component: () => import("@/views/bug/myTask/index"),
   //       name: "myTask",
   //     },
   //   ],
