@@ -64,3 +64,12 @@ export const createBug = async (data) => {
     data,
   });
 };
+
+// 查询bug任务
+export const selectBug = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/selectBug`,
+    data,
+  });
+};

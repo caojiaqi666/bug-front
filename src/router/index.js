@@ -117,11 +117,11 @@ const routes = [
       //   component: () => import("@/views/bug/myCreate/index"),
       //   name: "myCreate",
       // },
-      // {
-      //   path: "allTask",
-      //   component: () => import("@/views/bug/allTask/index"),
-      //   name: "allTask",
-      // },
+      {
+        path: "allTask",
+        component: () => import("@/views/bug/allTask/index"),
+        name: "allTask",
+      },
       // {
       //   path: "myTask",
       //   component: () => import("@/views/bug/myTask/index"),
