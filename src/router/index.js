@@ -127,6 +127,20 @@ const routes = [
       //   component: () => import("@/views/bug/myTask/index"),
       //   name: "myTask",
       // },
+      {
+        path: '/showBug',
+        component: Home,
+        redirect: 'noredirect',
+        hidden: true,
+        children: [
+          {
+            path: ':id',
+            component: () => import('@/views/bug/showBug/index'),
+            name: 'showBug',
+            // meta: { title: 'backToTop' }
+          }
+        ]
+      }
     ],
   },
   // {

@@ -73,3 +73,12 @@ export const selectBug = async (data) => {
     data,
   });
 };
+
+// 删除bug任务
+export const deleteBug = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/deleteBug`,
+    data,
+  });
+};

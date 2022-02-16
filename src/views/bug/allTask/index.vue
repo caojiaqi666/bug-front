@@ -89,19 +89,19 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="优先级" align="center">
+      <el-table-column label="优先级" align="center" width="100">
         <template slot-scope="scope">
           <span>{{ scope.row.priText }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="严重程度" class-name="status-col">
+      <el-table-column label="严重程度" class-name="status-col" width="100">
         <template slot-scope="scope">
           <span>{{ scope.row.severityText }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="状态" class-name="status-col">
+      <el-table-column label="状态" class-name="status-col" width="0">
         <template slot-scope="scope">
           <span>{{ scope.row.statusText }}</span>
         </template>
@@ -114,7 +114,14 @@
       >
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="toDetail(scope.row)"
-            >查看详情</el-button
+            ><router-link
+              target="_blank"
+              :to="'/bug/showBug/' + scope.row._id"
+              class="link-type"
+              align="center"
+            >
+              <span style="color: white">查看详情</span>
+            </router-link></el-button
           >
           <el-button
             size="mini"
@@ -266,7 +273,7 @@ export default {
       dialogVisible: false,
       changeForm: {},
       searchParams: {
-        searchId: "",
+        _id: "",
         submitter: "",
         priority: "",
         severity: "",
@@ -326,8 +333,15 @@ export default {
       this.changeForm._id = row._id;
       this.dialogVisible = true;
     },
-    handleRemove(row) {
-      console.log("row._id: ", row._id);
+    async handleRemove(row) {
+      let res = await API.deleteBug(row.id);
+      console.log("res: ", res);
+      if (res?.status == 200 && res?.data?.state == 0) {
+        this.$message.success(res?.data?.msg);
+        window.location.reload();
+      } else {
+        this.$message.error(res?.data?.msg || "删除失败");
+      }
     },
     toDetail(row) {
       console.log("row: ", row);
