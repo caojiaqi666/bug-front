@@ -49,14 +49,14 @@
           <i class="el-icon-location"></i>
           <span slot="title">缺陷管理</span>
         </template>
-        <el-menu-item index="4-1">创建任务</el-menu-item>
-        <el-menu-item index="4-2">我的创建</el-menu-item>
-        <el-menu-item index="4-3">所有任务</el-menu-item>
-        <el-menu-item index="4-4">我的任务</el-menu-item>
+        <router-link to="/bug/create"><el-menu-item index="4-1">创建任务</el-menu-item></router-link>
+        <router-link to="/bug/myCreate"><el-menu-item index="4-2">我的创建</el-menu-item></router-link>
+        <router-link to="/bug/allTask"><el-menu-item index="4-3">所有任务</el-menu-item></router-link>
+        <router-link to="/bug/myTask"><el-menu-item index="4-4">我的任务</el-menu-item></router-link>
       </el-submenu>
       <el-menu-item index="5">
         <i class="el-icon-setting"></i>
-        <span slot="title">数据看板</span>
+         <router-link to="/bug/myTask"><el-menu-item index="5-1">数据看板</el-menu-item></router-link>
       </el-menu-item>
       <el-menu-item index="6">
         <i class="el-icon-setting"></i>

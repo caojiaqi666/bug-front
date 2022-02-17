@@ -107,16 +107,20 @@ export default {
       positions: [
         {
           value: "0",
-          label: "系统管理员",
+          label: "游客",
         },
         {
           value: "1",
-          label: "研发及测试人员",
+          label: "普通用户",
         },
         {
           value: "2",
-          label: "普通人员",
+          label: "系统管理员",
         },
+        {
+          value: "3",
+          label: "boss"
+        }
       ],
       checkAll: false,
       rolegroups: [],

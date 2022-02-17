@@ -9,6 +9,8 @@ axios.interceptors.response.use(
         path: "/login",
         query: { redirect: router.currentRoute.fullPath },
       });
+    } else if (response?.data?.state == 4) {
+      console.log("权限不够");
     }
     return response;
   },

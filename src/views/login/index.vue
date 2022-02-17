@@ -29,7 +29,7 @@
         </el-form-item>
 
         <el-tooltip
-          v-model="capsTooltip"
+          v-model="capsTooltip1"
           content="Caps lock is On"
           placement="right"
           manual
@@ -39,19 +39,19 @@
               <i class="el-icon-unlock"></i>
             </span>
             <el-input
-              :key="passwordType"
+              :key="passwordType1"
               ref="password"
               v-model="loginForm.password"
-              :type="passwordType"
+              :type="passwordType1"
               placeholder="请输入密码"
               name="password"
               tabindex="2"
               autocomplete="on"
-              @keyup.native="checkCapslock"
-              @blur="capsTooltip = false"
+              @keyup.native="checkCapslock1"
+              @blur="capsTooltip1 = false"
               @keyup.enter.native="debounce(handleLogin)"
             />
-            <span class="show-pwd" @click="showPwd">
+            <span class="show-pwd" @click="showPwd1">
               <i class="el-icon-view"></i>
             </span>
           </el-form-item>
@@ -68,11 +68,11 @@
         <div style="position: relative">
           <div class="tips">
             <span>Username : admin</span>
-            <span>Password : any</span>
+            <span>Password : 123123</span>
           </div>
           <div class="tips">
-            <span style="margin-right: 18px">Username : editor</span>
-            <span>Password : any</span>
+            <span style="margin-right: 18px">Username : admin2</span>
+            <span>Password : 123123</span>
           </div>
 
           <el-button
@@ -114,7 +114,7 @@
         </el-form-item>
 
         <el-tooltip
-          v-model="capsTooltip"
+          v-model="capsTooltip2"
           content="Caps lock is On"
           placement="right"
           manual
@@ -124,26 +124,26 @@
               <i class="el-icon-unlock"></i>
             </span>
             <el-input
-              :key="passwordType"
+              :key="passwordType2"
               ref="password1"
               v-model="registerForm.password1"
-              :type="passwordType"
+              :type="passwordType2"
               placeholder="请输入密码"
               name="password"
               tabindex="2"
               autocomplete="on"
-              @keyup.native="checkCapslock"
-              @blur="capsTooltip = false"
+              @keyup.native="checkCapslock2"
+              @blur="capsTooltip2 = false"
               @keyup.enter.native="handleLogin"
             />
-            <span class="show-pwd" @click="showPwd">
+            <span class="show-pwd" @click="showPwd2">
               <i class="el-icon-view"></i>
             </span>
           </el-form-item>
         </el-tooltip>
 
         <el-tooltip
-          v-model="capsTooltip"
+          v-model="capsTooltip3"
           content="Caps lock is On"
           placement="right"
           manual
@@ -153,19 +153,19 @@
               <i class="el-icon-unlock"></i>
             </span>
             <el-input
-              :key="passwordType"
+              :key="passwordType3"
               ref="password2"
               v-model="registerForm.password2"
-              :type="passwordType"
+              :type="passwordType3"
               placeholder="请再次输入密码"
               name="password"
               tabindex="2"
               autocomplete="on"
-              @keyup.native="checkCapslock"
-              @blur="capsTooltip = false"
+              @keyup.native="checkCapslock3"
+              @blur="capsTooltip3 = false"
               @keyup.enter.native="debounce(handleLogin)"
             />
-            <span class="show-pwd" @click="showPwd">
+            <span class="show-pwd" @click="showPwd3">
               <i class="el-icon-view"></i>
             </span>
           </el-form-item>
@@ -182,11 +182,11 @@
         <div style="position: relative">
           <div class="tips">
             <span>Username : admin</span>
-            <span>Password : any</span>
+            <span>Password : 123123</span>
           </div>
           <div class="tips">
-            <span style="margin-right: 18px">Username : editor</span>
-            <span>Password : any</span>
+            <span style="margin-right: 18px">Username : admin2</span>
+            <span>Password : 123123</span>
           </div>
 
           <el-button
@@ -210,39 +210,6 @@ export default {
   name: "Login",
   components: {},
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error("Please enter the correct user name"));
-      } else {
-        callback();
-      }
-    };
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
-      } else {
-        callback();
-      }
-    };
-    const validatePass1 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        if (this.registerForm.checkPass !== "") {
-          this.$refs.registerForm.validateField("checkPass");
-        }
-        callback();
-      }
-    };
-    const validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.registerForm.pass) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
-        callback();
-      }
-    };
     return {
       loginStatus: true,
       loginForm: {
@@ -255,26 +222,92 @@ export default {
         password2: "",
       },
       loginRules: {
-        // username: [
-        //   { required: true, trigger: "blur", validator: validateUsername },
-        // ],
-        // password: [
-        //   { required: true, trigger: "blur", validator: validatePassword },
-        // ],
+        /*用户名规则*/
+        username: [
+          {
+            validator(rule, value, callback) {
+              if (/^[\w\u4e00-\u9fa5]{2,8}$/.test(value)) {
+                callback();
+              } else {
+                callback(new Error("用户名不满足规则"));
+              }
+            },
+            required: true,
+            trigger: "blur",
+          },
+        ],
+
+        /*密码规则*/
+        password: [
+          {
+            validator(rule, value, callback) {
+              if (
+                /^[\w\[\]\/\\\-!@#$%^&*()+=|,.<>?:;"'{}]{6,18}$/.test(value)
+              ) {
+                callback();
+              } else {
+                callback(new Error("密码不满足规则"));
+              }
+            },
+            required: true,
+            trigger: "blur",
+          },
+        ],
       },
       registerRules: {
-        // username: [
-        //   { required: true, trigger: "blur", validator: validateUsername },
-        // ],
-        // password1: [
-        //   { required: true, trigger: "blur", validator: validatePass1 },
-        // ],
-        // password2: [
-        //   { required: true, trigger: "blur", validator: validatePass2 },
-        // ],
+        /*用户名规则*/
+        username: [
+          {
+            validator(rule, value, callback) {
+              if (/^[\w\u4e00-\u9fa5]{2,8}$/.test(value)) {
+                callback();
+              } else {
+                callback(new Error("用户名不满足规则"));
+              }
+            },
+            required: true,
+            trigger: "blur",
+          },
+        ],
+
+        /*密码规则*/
+        password1: [
+          {
+            validator(rule, value, callback) {
+              if (
+                /^[\w\[\]\/\\\-!@#$%^&*()+=|,.<>?:;"'{}]{6,18}$/.test(value)
+              ) {
+                callback();
+              } else {
+                callback(new Error("密码不满足规则"));
+              }
+            },
+            required: true,
+            trigger: "blur",
+          },
+        ],
+
+        /*再次输入密码规则*/
+        password2: [
+          {
+            validator: (rule, value, callback) => {
+              if (value === this.registerForm.pass) {
+                callback();
+              } else {
+                callback("两次输入密码不一致");
+              }
+            },
+            required: true,
+            trigger: "blur",
+          },
+        ],
       },
-      passwordType: "password",
-      capsTooltip: false,
+      passwordType1: "password",
+      passwordType2: "password",
+      passwordType3: "password",
+      capsTooltip1: false,
+      capsTooltip2: false,
+      capsTooltip3: false,
       loading: false,
       showDialog: false,
       redirect: undefined,
@@ -308,18 +341,46 @@ export default {
   },
   methods: {
     debounce,
-    checkCapslock(e) {
+    checkCapslock1(e) {
       const { key } = e;
-      this.capsTooltip = key && key.length === 1 && key >= "A" && key <= "Z";
+      this.capsTooltip1 = key && key.length === 1 && key >= "A" && key <= "Z";
     },
-    showPwd() {
-      if (this.passwordType === "password") {
-        this.passwordType = "";
+    checkCapslock2(e) {
+      const { key } = e;
+      this.capsTooltip2 = key && key.length === 1 && key >= "A" && key <= "Z";
+    },
+    checkCapslock3(e) {
+      const { key } = e;
+      this.capsTooltip3 = key && key.length === 1 && key >= "A" && key <= "Z";
+    },
+    showPwd1() {
+      if (this.passwordType1 === "password") {
+        this.passwordType1 = "";
       } else {
-        this.passwordType = "password";
+        this.passwordType1 = "password";
       }
       this.$nextTick(() => {
         this.$refs.password1.focus();
+      });
+    },
+    showPwd2() {
+      if (this.passwordType2 === "password") {
+        this.passwordType2 = "";
+      } else {
+        this.passwordType2 = "password";
+      }
+      this.$nextTick(() => {
+        this.$refs.password2.focus();
+      });
+    },
+    showPwd3() {
+      if (this.passwordType3 === "password") {
+        this.passwordType3 = "";
+      } else {
+        this.passwordType3 = "password";
+      }
+      this.$nextTick(() => {
+        this.$refs.password3.focus();
       });
     },
     handleLogin() {
@@ -337,8 +398,9 @@ export default {
               });
               // 更新vuex
               this.$store.dispatch("login", res?.data?.user);
-              console.log('res?.data: ', res?.data?.user);
-              // this.$router.push("/");
+              setTimeout(() => {
+                this.$router.push("/user/adduser");
+              }, 2000);
             } else if (res?.data?.state == 1) {
               this.$message.close();
               this.$message({
@@ -406,18 +468,6 @@ export default {
             });
           }
           this.loading = false;
-          // this.$store
-          //   .dispatch("user/login", this.loginForm)
-          //   .then(() => {
-          //     this.$router.push({
-          //       path: this.redirect || "/",
-          //       query: this.otherQuery,
-          //     });
-          //     this.loading = false;
-          //   })
-          //   .catch(() => {
-          //     this.loading = false;
-          //   });
         } else {
           console.log("error submit!!");
           return false;

@@ -177,17 +177,21 @@ export default {
       ],
       powerOptions: [
         {
-          value: 0,
+          value: "0",
+          label: "游客",
+        },
+        {
+          value: "1",
+          label: "普通用户",
+        },
+        {
+          value: "2",
           label: "系统管理员",
         },
         {
-          value: 1,
-          label: "研发及测试人员",
-        },
-        {
-          value: 2,
-          label: "普通人员",
-        },
+          value: "3",
+          label: "boss"
+        }
       ],
       searchId: "",
       searchUsername: "",
