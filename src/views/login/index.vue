@@ -247,7 +247,7 @@ export default {
       loginStatus: true,
       loginForm: {
         username: "admin",
-        password: "111111",
+        password: "123123",
       },
       registerForm: {
         username: "",
@@ -255,23 +255,23 @@ export default {
         password2: "",
       },
       loginRules: {
-        username: [
-          { required: true, trigger: "blur", validator: validateUsername },
-        ],
-        password: [
-          { required: true, trigger: "blur", validator: validatePassword },
-        ],
+        // username: [
+        //   { required: true, trigger: "blur", validator: validateUsername },
+        // ],
+        // password: [
+        //   { required: true, trigger: "blur", validator: validatePassword },
+        // ],
       },
       registerRules: {
-        username: [
-          { required: true, trigger: "blur", validator: validateUsername },
-        ],
-        password1: [
-          { required: true, trigger: "blur", validator: validatePass1 },
-        ],
-        password2: [
-          { required: true, trigger: "blur", validator: validatePass2 },
-        ],
+        // username: [
+        //   { required: true, trigger: "blur", validator: validateUsername },
+        // ],
+        // password1: [
+        //   { required: true, trigger: "blur", validator: validatePass1 },
+        // ],
+        // password2: [
+        //   { required: true, trigger: "blur", validator: validatePass2 },
+        // ],
       },
       passwordType: "password",
       capsTooltip: false,
@@ -366,18 +366,6 @@ export default {
             });
           }
           this.loading = false;
-          // this.$store
-          //   .dispatch("user/login", this.loginForm)
-          //   .then(() => {
-          //     this.$router.push({
-          //       path: this.redirect || "/",
-          //       query: this.otherQuery,
-          //     });
-          //     this.loading = false;
-          //   })
-          //   .catch(() => {
-          //     this.loading = false;
-          //   });
         } else {
           console.log("error submit!!");
           return false;
@@ -387,9 +375,9 @@ export default {
     handleRegister() {
       this.$refs.registerForm.validate(async (valid) => {
         if (valid) {
-          const { username, password } = this.registerForm;
+          const { username, password1 } = this.registerForm;
           this.loading = true;
-          let res = await API.toRegister({ username, passwd: password });
+          let res = await API.toRegister({ username, passwd: password1 });
           if (res?.status == 200) {
             if (res?.data?.state == 0) {
               this.$message.close();

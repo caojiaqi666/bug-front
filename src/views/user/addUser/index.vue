@@ -94,9 +94,9 @@ export default {
   data() {
     return {
       postForm: {
-        email: "",
-        password: "",
-        repassword: "",
+        email: "155@qq.com",
+        password: "11",
+        repassword: "11",
         username: "",
         power: undefined,
       },
@@ -169,6 +169,7 @@ export default {
         return;
       }
       let res = await API.addUser(this.postForm);
+      console.log('res: ', res);
       if (res?.data?.state === 0) {
         this.$message({
           message: "添加用户成功",

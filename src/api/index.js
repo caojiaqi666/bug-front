@@ -1,6 +1,25 @@
 import axios from "axios";
+import router from "../router/index.js";
 
-const BASEURL = process.env.NODE_ENV === "development" ? "http://localhost:9527" : ""
+// 响应拦截器
+axios.interceptors.response.use(
+  (response) => {
+    if (response?.data?.state == 5) {
+      return router.push({
+        path: "/login",
+        query: { redirect: router.currentRoute.fullPath },
+      });
+    }
+    return response;
+  },
+  (error) => {
+    console.log("error: ", error);
+    return Promise.reject(error);
+  }
+);
+
+const BASEURL =
+  process.env.NODE_ENV === "development" ? "http://localhost:9527" : "";
 
 // 登录接口
 export const toLogin = async (data) => {
@@ -8,6 +27,7 @@ export const toLogin = async (data) => {
     method: "POST",
     url: `${BASEURL}/login`,
     data,
+    withCredentials: true,
   });
 };
 
@@ -17,6 +37,7 @@ export const toRegister = async (data) => {
     method: "POST",
     url: `${BASEURL}/register`,
     data,
+    withCredentials: true,
   });
 };
 
@@ -26,6 +47,7 @@ export const addUser = async (data) => {
     method: "POST",
     url: `${BASEURL}/addUser`,
     data,
+    withCredentials: true,
   });
 };
 
@@ -35,6 +57,7 @@ export const selectUser = async (data) => {
     method: "POST",
     url: `${BASEURL}/selectUser`,
     data,
+    withCredentials: true,
   });
 };
 
@@ -44,6 +67,7 @@ export const changeInfo = async (data) => {
     method: "POST",
     url: `${BASEURL}/changeInfo`,
     data,
+    withCredentials: true,
   });
 };
 
@@ -53,6 +77,7 @@ export const deleteUser = async (data) => {
     method: "POST",
     url: `${BASEURL}/deleteUser`,
     data,
+    withCredentials: true,
   });
 };
 
@@ -62,6 +87,7 @@ export const createBug = async (data) => {
     method: "POST",
     url: `${BASEURL}/createBug`,
     data,
+    withCredentials: true,
   });
 };
 
@@ -71,6 +97,7 @@ export const selectBug = async (data) => {
     method: "POST",
     url: `${BASEURL}/selectBug`,
     data,
+    withCredentials: true,
   });
 };
 
@@ -80,5 +107,6 @@ export const deleteBug = async (data) => {
     method: "POST",
     url: `${BASEURL}/deleteBug`,
     data,
+    withCredentials: true,
   });
 };
