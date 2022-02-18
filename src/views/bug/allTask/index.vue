@@ -77,7 +77,7 @@
           <span>{{ scope.row._id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="提交人" align="center">
+      <el-table-column label="提交人" align="center" width="100">
         <template slot-scope="scope">
           <span>{{ scope.row.submitter }}</span>
         </template>
@@ -101,9 +101,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="状态" class-name="status-col" width="0">
+      <el-table-column label="状态" class-name="status-col" width="100">
         <template slot-scope="scope">
-          <span>{{ scope.row.statusText }}</span>
+          <!-- <span></span> -->
+          <el-button size="mini" :type="statusArr[scope.row.status]">{{ scope.row.statusText }}</el-button>
         </template>
       </el-table-column>
       <el-table-column
@@ -280,6 +281,7 @@ export default {
         status: "",
         title: "",
       },
+      statusArr: [ "danger", "warning","success", "primary", "info"]
     };
   },
   activated() {

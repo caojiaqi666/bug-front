@@ -7,13 +7,13 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "首页",
     redirect: "/login",
     component: () => import("@/views/login/index.vue"),
   },
   {
     path: "/login",
-    name: "Login",
+    name: "登录页",
     component: () => import("@/views/login/index.vue"),
   },
   // {
@@ -36,37 +36,38 @@ const routes = [
   {
     path: "/user",
     component: Home,
+    name: "用户管理",
     redirect: "/user/userGroup",
     children: [
       {
         path: "userGroup",
         component: () => import("@/views/user/userGroup/index"),
-        name: "userGroup",
+        name: "用户组",
       },
       {
         path: "allUser",
         component: () => import("@/views/user/allUser/index"),
-        name: "allUser",
+        name: "成员管理",
       },
       {
         path: "addUser",
         component: () => import("@/views/user/addUser/index"),
-        name: "addUser",
+        name: "添加用户",
       },
       {
         path: "changePwd",
         component: () => import("@/views/user/changePwd/index"),
-        name: "changePwd",
+        name: "修改密码",
       },
       {
         path: "changeAvatar",
         component: () => import("@/views/user/changeAvatar/index"),
-        name: "changeAvatar",
+        name: "修改头像",
       },
       {
         path: "changeEmail",
         component: () => import("@/views/user/changeEmail/index"),
-        name: "changeEmail",
+        name: "修改邮箱",
       },
     ],
   },
@@ -105,38 +106,38 @@ const routes = [
   {
     path: "/bug",
     component: Home,
+    name: "缺陷管理",
     redirect: "/bug/create",
     children: [
       {
         path: "create",
         component: () => import("@/views/bug/create/index"),
-        name: "create",
+        name: "创建任务",
       },
       // {
       //   path: "myCreate",
       //   component: () => import("@/views/bug/myCreate/index"),
-      //   name: "myCreate",
+      //   name: "我的创建",
       // },
       {
         path: "allTask",
         component: () => import("@/views/bug/allTask/index"),
-        name: "allTask",
+        name: "全部任务",
       },
       // {
       //   path: "myTask",
       //   component: () => import("@/views/bug/myTask/index"),
-      //   name: "myTask",
+      //   name: "我的任务",
       // },
       {
-        path: '/showBug',
+        path: 'showBug',
         component: Home,
-        redirect: 'noredirect',
         hidden: true,
         children: [
           {
             path: ':id',
             component: () => import('@/views/bug/showBug/index'),
-            name: 'showBug',
+            name: '查看详情',
             // meta: { title: 'backToTop' }
           }
         ]

@@ -18,9 +18,15 @@
     </div>
     <div class="navigation">
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <!-- <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>项目管理</el-breadcrumb-item>
-        <el-breadcrumb-item>团队空间</el-breadcrumb-item>
+        <el-breadcrumb-item>团队空间</el-breadcrumb-item> -->
+        <el-breadcrumb-item
+          v-for="(item, index) in breadList"
+          :key="index"
+          :to="{ path: item.path }"
+          >{{ item.name }}</el-breadcrumb-item
+        >
       </el-breadcrumb>
     </div>
     <div class="right-menu">
@@ -41,29 +47,102 @@
           ></path>
         </svg>
       </div>
-      <div class="avatar-wrapper">
-        <img src="../../assets/img/avatar.gif" alt="" />
-      </div>
+
+      <el-popover
+        class="avatar-wrapper"
+        placement="bottom"
+        trigger="manual"
+        v-model="visible"
+      >
+        <div style="text-align: center">
+          <el-button type="primary" @click="handleLogOut">退出登录</el-button>
+        </div>
+        <img
+          slot="reference"
+          @click="visible = !visible"
+          src="../../assets/img/avatar.gif"
+          alt=""
+        />
+      </el-popover>
     </div>
   </div>
 </template>
 
 <script>
+import router from "@/router/index.js";
 export default {
   name: "NavBar",
   data() {
-    return {};
+    return {
+      visible: false,
+      breadList: [],
+    };
   },
   methods: {
     toggleClick() {
       this.$store.dispatch("changeClollapse", null);
     },
+    handleShowPop() {
+      this.visible = !this.visible;
+    },
+    handleLogOut() {},
+    getBreadList(val) {
+      this.breadList = [];
+      // 过滤路由matched对象
+      if (val.matched) {
+        let matched = val.matched.filter(
+          (item) => item.meta && item.meta.title
+        );
+        console.log(matched, "面包屑导航");
+        // 拿到过滤好的路由v-for遍历出来
+        //this.breadList = matched;
+        for (var i = 0; i < matched.length; i++) {
+          if (matched[i].meta.parentTitle) {
+            this.breadList.push(matched[i].meta.parentTitle);
+          }
+          this.breadList.push(matched[i].meta.title);
+        }
+      }
+      console.log("this.breadList: ", this.breadList);
+    },
   },
-  computed: {},
+  mounted() {
+    // console.log("-----------------: ", router.options.routes);
+    let nowRoute = this.$route.path.split("/")[2]
+    let list = router.options.routes;
+    let childrenList = [];
+    // list?.forEach((item) => {
+    //   console.log('item: ', item);
+    //   if (item.children) {
+    //     childrenList.push(...item.children);
+    //   }
+    // });
+    // childrenList.forEach((item) => {
+    //   if (item.path == nowRoute) {
+        
+    //   }
+    // })
+  },
+  computed: {
+    //   breadList() {
+    //     return router.options.routes || [];
+    //   },
+  },
+  watch: {
+    $route(val) {
+      console.log("val: ", val);
+
+      this.getBreadList();
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.el-popper {
+  width: 50px !important;
+  text-align: center !important;
+}
 .navBar {
   width: 100%;
   height: 50px;
@@ -115,6 +194,7 @@ export default {
         width: 40px;
         height: 40px;
         border-radius: 5px;
+        cursor: pointer;
       }
     }
   }

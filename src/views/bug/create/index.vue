@@ -35,7 +35,7 @@
         :model="bugInfoForm"
       >
         <el-form-item label="受理人">
-          <el-select v-model="bugInfoForm.receiver" placeholder="请选择">
+          <!-- <el-select v-model="bugInfoForm.receiver" placeholder="请选择">
             <el-option
               v-for="item in receiverOptions"
               :key="item.value"
@@ -43,7 +43,8 @@
               :value="item.value"
             >
             </el-option>
-          </el-select>
+          </el-select> -->
+          <el-input v-model="bugInfoForm.receiver"></el-input>
         </el-form-item>
         <el-form-item label="缺陷类型">
           <el-select v-model="bugInfoForm.bugType" placeholder="请选择">
