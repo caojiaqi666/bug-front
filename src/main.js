@@ -7,6 +7,7 @@ import "@/plugins/element.js"; // 引入elementui
 import "@/styles/element-variables.scss"; // 改变element主题色
 import "@/styles/index.scss"; // 全局样式
 
+import "./icons"; // icon
 Vue.config.productionTip = false;
 
 new Vue({

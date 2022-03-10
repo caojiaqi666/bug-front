@@ -130,31 +130,33 @@ const routes = [
       //   name: "我的任务",
       // },
       {
-        path: 'showBug',
+        path: "showBug",
         component: Home,
         hidden: true,
         children: [
           {
-            path: ':id',
-            component: () => import('@/views/bug/showBug/index'),
-            name: '查看详情',
+            path: ":id",
+            component: () => import("@/views/bug/showBug/index"),
+            name: "查看详情",
             // meta: { title: 'backToTop' }
-          }
-        ]
-      }
+          },
+        ],
+      },
     ],
   },
-  // {
-  //   path: "/dataBoard",
-  //   component: Home,
-  //   children: [
-  //     {
-  //       path: "index",
-  //       component: () => import("@/views/dataBoard/index"),
-  //       name: "dataBoard",
-  //     },
-  //   ],
-  // },
+  {
+    path: "/databoard",
+    component: Home,
+    name: "数据看板",
+    redirect: "/databoard/index",
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/databoard/index"),
+        name: "数据看板1",
+      },
+    ],
+  },
   // {
   //   path: "/system",
   //   component: Home,
