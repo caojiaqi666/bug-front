@@ -112,3 +112,24 @@ export const deleteBug = async (data) => {
     withCredentials: true,
   });
 };
+
+
+// 查询数据看板数据
+export const searchData = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/searchData`,
+    data,
+    withCredentials: true,
+  });
+};
+
+// 查询数据看板折线图数据
+export const searchLineData = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/searchLineData`,
+    data,
+    withCredentials: true,
+  });
+};

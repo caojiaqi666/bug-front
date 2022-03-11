@@ -119,7 +119,7 @@
           <span slot="title">数据看板</span>
         </template>
         <el-menu-item index="5-1">
-          <router-link to="/">
+          <router-link to="/databoard/index">
             <i class="el-icon-s-platform"></i>查看数据</router-link
           ></el-menu-item
         >
