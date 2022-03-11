@@ -1,86 +1,86 @@
 <template>
-  <div id="head" style="padding-left: 20px">
-    <p class="warn-content">修改个人头像</p>
-    <el-button type="primary" @click="toggleShow">设置头像</el-button>
-    <!-- <el-upload
+  <div style="padding-left: 20px">
+    <el-upload
       class="avatar-uploader"
-      action="https://jsonplaceholder.typicode.com/posts/"
-      :show-file-list="false"
+      action="http://localhost:9527/upload/imgs"
+      :on-preview="handlePictureCardPreview"
+      :on-remove="handleRemove"
+      :multiple="false"
       :on-success="handleAvatarSuccess"
+      :show-file-list="false"
       :before-upload="beforeAvatarUpload"
     >
       <img v-if="imageUrl" :src="imageUrl" class="avatar" />
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload> -->
-    <img :src="avatar" />
+    </el-upload>
+    <el-button type="primary" @click="changeAvatar">修改头像</el-button>
+    <!-- <img :src="imgServeUrl" alt=""> -->
   </div>
 </template>
-
 <script>
+import * as API from "@/api";
 export default {
-  name: "HeadImg",
-  components: {},
   data() {
     return {
-      show: false,
-      imgname: "head",
-      url: process.env.VUE_APP_BASE_API + "/upload/headimg",
-      params: {
-        // token: getToken(),
-        name: "avatar",
-      },
-      headers: {
-        smail: "*_~",
-        // Authorization: "Bearer " + getToken(),
-      },
-      avatar: '',
       imageUrl: "",
+      imgServeUrl: "",
     };
   },
-  computed: {
-    avatar1: {
-      get() {
-        return this.$store.state.user.avatar;
-      },
-      set(val) {
-        this.$store.commit("user/SET_AVATAR", val);
-      },
-    },
-  },
-  created() {
-        console.log('this.$store.state: ', this.$store.state);
-    this.checktoken();
-  },
   methods: {
-    checktoken() {
-      // if (getToken() === "") {
-      //   this.$router.push("/login");
-      // }
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
     },
-    toggleShow() {
-      this.show = !this.show;
-      this.imgname = new Date().valueOf().toString();
-    },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
+    //上传之后的检测
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+      //是否是图片格式
+      let isImage = /^image\/(gif|jpeg|png)$/.test(file.type);
+      //是否小于2M
+      let isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isImage) {
+        this.$message.error("上传头像必须是jpg/png/gif图片");
       }
       if (!isLt2M) {
         this.$message.error("上传头像图片大小不能超过 2MB!");
       }
-      return isJPG && isLt2M;
+      return isImage && isLt2M;
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    //上传成功之后
+    handleAvatarSuccess(res, file) {
+      console.log("res: ", res);
+      if (res.code == 0) {
+        this.imgServeUrl = res.url;
+        console.log("this.imgServeUrl : ", this.imgServeUrl);
+        this.imageUrl = URL.createObjectURL(file.raw);
+        this.$message({
+          type: "success",
+          message: "上传成功",
+          duration: 1000,
+        });
+      } else {
+        this.$message({
+          type: "error",
+          message: "上传失败" + res?.msg,
+          duration: 1000,
+        });
+      }
+    },
+    async changeAvatar() {
+      let res = await API.changeAvatar({ avatar: this.imgServeUrl });
+      if (res?.data?.state == 0) {
+        this.$message.success(res?.data?.msg);
+      } else {
+        this.$message.error(res?.data?.msg || "未知错误");
+      }
     },
   },
 };
 </script>
 
-<style scoped>
+<style>
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

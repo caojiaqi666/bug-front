@@ -83,6 +83,16 @@ export const deleteUser = async (data) => {
   });
 };
 
+// 修改本人头像
+export const changeAvatar = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/changeAvatar`,
+    data,
+    withCredentials: true,
+  });
+};
+
 // 创建bug任务
 export const createBug = async (data) => {
   return await axios({
@@ -129,6 +139,16 @@ export const searchLineData = async (data) => {
   return await axios({
     method: "POST",
     url: `${BASEURL}/searchLineData`,
+    data,
+    withCredentials: true,
+  });
+};
+
+// 上传图片接口
+export const uploadImgs = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/upload/imgs`,
     data,
     withCredentials: true,
   });

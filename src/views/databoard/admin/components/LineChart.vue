@@ -5,11 +5,7 @@
 <script>
 import echarts from "echarts";
 require("echarts/theme/macarons"); // echarts theme
-<<<<<<< HEAD
 import { debounce1 } from "@/utils";
-=======
-import { debounce } from "@/utils";
->>>>>>> a5f1b825c9ee394562e2ea9fa2811ececb0f109d
 import { searchLineData } from "@/api/index";
 
 export default {
@@ -50,7 +46,7 @@ export default {
     this.x();
     this.getdata();
     if (this.autoResize) {
-      this.__resizeHanlder = debounce(() => {
+      this.__resizeHanlder = debounce1(() => {
         if (this.chart) {
           this.chart.resize();
         }
