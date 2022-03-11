@@ -6,7 +6,7 @@
  * @param {boolean} immediate
  * @return {*}
  */
-export function debounce(func, wait, immediate) {
+export function debounce1(func, wait, immediate) {
   let timeout, args, context, timestamp, result;
 
   const later = function () {
@@ -41,6 +41,16 @@ export function debounce(func, wait, immediate) {
   };
 }
 
+// 防抖方法
+export function debounce(func, ...args) {
+  let context = this;
+  if (this.debounceTimer) clearTimeout(this.debounceTimer);
+  let callNow = !this.debounceTimer; //是否立即执行
+  this.debounceTimer = setTimeout(() => {
+    this.debounceTimer = null;
+  }, 400);
+  if (callNow) func.apply(context, args);
+}
 /**
  * 格式化日期
  * 默认格式：YYYY-MM-DD
