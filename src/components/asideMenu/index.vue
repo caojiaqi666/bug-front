@@ -17,7 +17,7 @@
           <span slot="title">项目管理</span>
         </template>
         <el-menu-item index="1-1">
-          <router-link to="/">
+          <router-link to="/user">
             <i class="el-icon-connection"></i>团队空间</router-link
           ></el-menu-item
         >

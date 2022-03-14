@@ -21,11 +21,14 @@ export default new Vuex.Store({
   },
   mutations: {
     LOGIN(state, value) {
-      console.log('触发loginvalue: ', value);
+      console.log("触发loginvalue: ", value);
+      sessionStorage.setItem("userInfo", value);
+      sessionStorage.getItem("userInfo");
       state.userInfo = value;
     },
     LOGOUT(state, value) {
       state.userInfo = {};
+      sessionStorage.removeItem("userInfo");
     },
     CHANGECLOLLAPSE(state, value) {
       state.isCollapse = !state.isCollapse;

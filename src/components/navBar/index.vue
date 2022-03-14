@@ -60,7 +60,7 @@
         <img
           slot="reference"
           @click="visible = !visible"
-          src="../../assets/img/avatar.gif"
+          :src="$store.state.userInfo.avatar"
           alt=""
         />
       </el-popover>
@@ -107,6 +107,7 @@ export default {
     },
   },
   mounted() {
+    console.log('$store.state.userInfo.avatar: ', this.$store.state.userInfo);
     // console.log("-----------------: ", router.options.routes);
     let nowRoute = this.$route.path.split("/")[2]
     let list = router.options.routes;
