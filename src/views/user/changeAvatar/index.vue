@@ -71,6 +71,7 @@ export default {
     async changeAvatar() {
       let res = await API.changeAvatar({ avatar: this.imgServeUrl });
       if (res?.data?.state == 0) {
+        this.$store.dispatch("login", res.data.userInfo);
         this.$message.success(res?.data?.msg);
       } else {
         this.$message.error(res?.data?.msg || "未知错误");

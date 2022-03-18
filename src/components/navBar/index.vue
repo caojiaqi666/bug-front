@@ -107,9 +107,8 @@ export default {
     },
   },
   mounted() {
-    console.log('$store.state.userInfo.avatar: ', this.$store.state.userInfo);
     // console.log("-----------------: ", router.options.routes);
-    let nowRoute = this.$route.path.split("/")[2]
+    let nowRoute = this.$route.path.split("/")[2];
     let list = router.options.routes;
     let childrenList = [];
     // list?.forEach((item) => {
@@ -120,9 +119,12 @@ export default {
     // });
     // childrenList.forEach((item) => {
     //   if (item.path == nowRoute) {
-        
     //   }
     // })
+    let cookieUserInfo = sessionStorage.getItem('userInfo')
+    if (cookieUserInfo) {
+      this.$store.dispatch("login", JSON.parse(cookieUserInfo));
+    }
   },
   computed: {
     //   breadList() {

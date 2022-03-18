@@ -25,6 +25,7 @@ export default new Vuex.Store({
       sessionStorage.setItem("userInfo", value);
       sessionStorage.getItem("userInfo");
       state.userInfo = value;
+      sessionStorage.setItem("userInfo", JSON.stringify(state.userInfo));
     },
     LOGOUT(state, value) {
       state.userInfo = {};
