@@ -73,6 +73,7 @@ export default {
       if (res?.data?.state == 0) {
         this.$store.dispatch("login", res.data.userInfo);
         this.$message.success(res?.data?.msg);
+        this.imageUrl = "";
       } else {
         this.$message.error(res?.data?.msg || "未知错误");
       }
