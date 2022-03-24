@@ -129,20 +129,20 @@ const routes = [
       //   component: () => import("@/views/bug/myTask/index"),
       //   name: "我的任务",
       // },
-      {
-        path: "showBug",
-        component: Home,
-        hidden: true,
-        children: [
-          {
-            path: ":id",
-            component: () => import("@/views/bug/showBug/index"),
-            name: "查看详情",
-            // meta: { title: 'backToTop' }
-          },
-        ],
-      },
     ],
+  },
+  {
+    path: '/showBug',
+    component: Home,
+    redirect: 'noredirect',
+    children: [
+      {
+        path: ':id',
+        component: () => import('@/views/bug/showBug/index'),
+        name: '查看详情',
+        // meta: { title: 'backToTop' }
+      }
+    ]
   },
   {
     path: "/databoard",

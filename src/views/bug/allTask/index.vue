@@ -117,7 +117,7 @@
           <el-button type="primary" size="mini" @click="toDetail(scope.row)"
             ><router-link
               target="_blank"
-              :to="'/bug/showBug/' + scope.row._id"
+              :to="'/showBug/' + scope.row._id"
               class="link-type"
               align="center"
             >
