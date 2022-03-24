@@ -153,3 +153,43 @@ export const uploadImgs = async (data) => {
     withCredentials: true,
   });
 };
+
+// 创建项目
+export const createProject = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/createProject`,
+    data,
+    withCredentials: true,
+  });
+};
+
+// 删除项目
+export const deleteProject = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/deleteProject`,
+    data,
+    withCredentials: true,
+  });
+};
+
+// 修改项目
+export const changeProject = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/changeProject`,
+    data,
+    withCredentials: true,
+  });
+};
+
+// 查找项目
+export const selectProject = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/selectProject`,
+    data,
+    withCredentials: true,
+  });
+};

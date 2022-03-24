@@ -16,23 +16,23 @@ const routes = [
     name: "登录页",
     component: () => import("@/views/login/index.vue"),
   },
-  // {
-  //   path: "/project",
-  //   component: Home,
-  //   redirect: "/project/team",
-  //   children: [
-  //     {
-  //       path: "team",
-  //       component: () => import("@/views/team/index"),
-  //       name: "team",
-  //     },
-  //     {
-  //       path: "demand",
-  //       component: () => import("@/views/demand/index"),
-  //       name: "demand",
-  //     },
-  //   ],
-  // },
+  {
+    path: "/project",
+    component: Home,
+    redirect: "/project/team",
+    children: [
+      {
+        path: "setting",
+        component: () => import("@/views/project/setting/index"),
+        name: "team",
+      },
+      {
+        path: "demand",
+        component: () => import("@/views/project/demand/index"),
+        name: "demand",
+      },
+    ],
+  },
   {
     path: "/user",
     component: Home,

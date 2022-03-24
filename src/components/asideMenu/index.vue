@@ -13,16 +13,18 @@
     >
       <el-submenu index="1">
         <template slot="title">
-          <i class="el-icon-document"></i>
+          <i class="el-icon-user"></i>
           <span slot="title">项目管理</span>
         </template>
-        <el-menu-item index="1-1">
-          <router-link to="/user">
-            <i class="el-icon-connection"></i>团队空间</router-link
-          ></el-menu-item
+        <router-link to="/project/setting"
+          ><el-menu-item index="1-1"
+            ><i class="el-icon-notebook-2"></i>设置项目</el-menu-item
+          ></router-link
         >
-        <el-menu-item index="1-2"
-          ><i class="el-icon-postcard"></i>需求管理</el-menu-item
+        <router-link to="/project/demand"
+          ><el-menu-item index="1-2"
+            ><i class="el-icon-coordinate"></i>需求管理</el-menu-item
+          ></router-link
         >
       </el-submenu>
       <el-submenu index="2">
