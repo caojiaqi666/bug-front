@@ -17,6 +17,19 @@ const routes = [
     component: () => import("@/views/login/index.vue"),
   },
   {
+    path: "/databoard",
+    component: Home,
+    name: "数据看板",
+    redirect: "/databoard/index",
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/databoard/index"),
+        name: "数据看板1",
+      },
+    ],
+  },
+  {
     path: "/project",
     component: Home,
     redirect: "/project/team",
@@ -71,38 +84,6 @@ const routes = [
       },
     ],
   },
-  // {
-  //   path: "/test",
-  //   component: Home,
-  //   redirect: "/test/jtest",
-  //   children: [
-  //     {
-  //       path: "jtest",
-  //       component: () => import("@/views/jtest/index"),
-  //       name: "jtest",
-  //     },
-  //     {
-  //       path: "case",
-  //       component: () => import("@/views/case/index"),
-  //       name: "case",
-  //     },
-  //     {
-  //       path: "plan",
-  //       component: () => import("@/views/plan/index"),
-  //       name: "plan",
-  //     },
-  //     {
-  //       path: "review",
-  //       component: () => import("@/views/review/index"),
-  //       name: "review",
-  //     },
-  //     {
-  //       path: "report",
-  //       component: () => import("@/views/report/index"),
-  //       name: "report",
-  //     },
-  //   ],
-  // },
   {
     path: "/bug",
     component: Home,
@@ -143,19 +124,6 @@ const routes = [
         // meta: { title: 'backToTop' }
       }
     ]
-  },
-  {
-    path: "/databoard",
-    component: Home,
-    name: "数据看板",
-    redirect: "/databoard/index",
-    children: [
-      {
-        path: "index",
-        component: () => import("@/views/databoard/index"),
-        name: "数据看板1",
-      },
-    ],
   },
   // {
   //   path: "/system",

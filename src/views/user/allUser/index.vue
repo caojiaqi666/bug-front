@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
+    <!-- <div class="filter-container">
       <p class="warn-content">
         管理员能修改所有信息，管理者只能修改下一级的信息或者创建下一级的用户账号
       </p>
-    </div>
+    </div> -->
 
     <div class="control">
       <div class="control-item">
@@ -48,7 +48,7 @@
       </el-table-column>
       <el-table-column label="日期" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.createDate }}</span>
+          <span>{{ scope.row.dateText }}</span>
         </template>
       </el-table-column>
 
@@ -60,7 +60,7 @@
 
       <el-table-column label="职位" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.power }}</span>
+          <span>{{ powerOptions[scope.row.power].label }}</span>
         </template>
       </el-table-column>
 
@@ -144,6 +144,7 @@
 
 <script>
 import * as API from "@/api";
+import moment from "moment";
 
 export default {
   name: "Usermanager",
@@ -190,8 +191,8 @@ export default {
         },
         {
           value: "3",
-          label: "boss"
-        }
+          label: "boss",
+        },
       ],
       searchId: "",
       searchUsername: "",
@@ -209,6 +210,7 @@ export default {
     this.getuserList();
   },
   methods: {
+    moment,
     cancel() {
       this.dialogVisible = false;
     },
@@ -232,6 +234,11 @@ export default {
       if (res?.status === 200) {
         this.userlist = res?.data?.userList || [];
         console.log("res: ", this.userlist);
+        this.userlist.forEach((item) => {
+          item.dateText = moment(+item.createDate).format(
+            "YYYY年MM月DD日 HH:mm"
+          );
+        });
       } else {
         this.$message.error(res?.data?.msg || "服务器错误");
       }
@@ -241,9 +248,8 @@ export default {
       this.dialogVisible = true;
     },
     handleRemove(row) {
-      console.log('row._id: ', row._id);
+      console.log("row._id: ", row._id);
       this.deleteUser(row._id);
-      
     },
     handleResetPwd(row) {
       console.log("row: ", row);
@@ -276,7 +282,7 @@ export default {
       this.getuserList();
     },
     async changeInfo(data) {
-      let res = API.changeInfo({ ...data });
+      let res = await API.changeInfo({ ...data });
       if (res?.data?.state == 0) {
         this.$message.success(res?.data?.msg || "操作成功");
       } else {
@@ -284,7 +290,13 @@ export default {
       }
     },
     async deleteUser(_id) {
-      let res = API.deleteUser({ _id });
+      let res = await API.deleteUser({ _id });
+      if (res.status == 200 && res.data.state == 0) {
+        this.$message.success(res?.data?.msg);
+      } else {
+        this.$message.error(res?.data?.msg);
+      }
+      this.getuserList();
     },
   },
 };

@@ -393,14 +393,14 @@ export default {
             if (res?.data?.state == 0) {
               this.$message.close();
               this.$message({
-                message: "恭喜你，登录成功",
+                message: "登录成功",
                 type: "success",
               });
               // 更新vuex
               this.$store.dispatch("login", res?.data?.user);
               setTimeout(() => {
-                this.$router.push("/user/adduser");
-              }, 2000);
+                this.$router.push("/dataBoard/index");
+              }, 500);
             } else if (res?.data?.state == 1) {
               this.$message.close();
               this.$message({

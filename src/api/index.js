@@ -43,6 +43,26 @@ export const toRegister = async (data) => {
   });
 };
 
+// 修改密码
+export const changePwd = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/changePwd`,
+    data,
+    withCredentials: true,
+  });
+};
+
+// 修改邮箱
+export const changeEmail = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/changeEmail`,
+    data,
+    withCredentials: true,
+  });
+};
+
 // 添加用户
 export const addUser = async (data) => {
   return await axios({

@@ -89,7 +89,7 @@ export default {
     getBreadList(val) {
       this.breadList = [];
       // 过滤路由matched对象
-      if (val.matched) {
+      if (val?.matched) {
         let matched = val.matched.filter(
           (item) => item.meta && item.meta.title
         );
