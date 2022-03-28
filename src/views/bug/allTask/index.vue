@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <p class="warn-content">
-        管理员能修改所有信息，管理者只能修改下一级的信息或者创建下一级的用户账号
+        管理员能修改所有信息
       </p>
     </div>
 
@@ -48,7 +48,6 @@
           >
           </el-option>
         </el-select>
-        <!-- <el-input v-model="searchParams.status" placeholder="状态"></el-input> -->
       </div>
       <div class="control-item">
         <el-input v-model="searchParams.title" placeholder="标题"></el-input>
@@ -67,19 +66,29 @@
       highlight-current-row
       style="width: 100%"
     >
-      <el-table-column label="标题" align="center" width="300">
-        <template slot-scope="scope">
-          <span>{{ scope.row.title }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="id" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row._id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="提交人" align="center" width="100">
+      <el-table-column label="标题" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.title }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="关联项目" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.relationProject }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="提交人" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.submitter }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="受理人" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.receiver }}</span>
         </template>
       </el-table-column>
 
@@ -89,28 +98,29 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="优先级" align="center" width="100">
+      <el-table-column label="优先级" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.priText }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="严重程度" class-name="status-col" width="100">
+      <el-table-column label="严重程度" class-name="status-col">
         <template slot-scope="scope">
           <span>{{ scope.row.severityText }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="状态" class-name="status-col" width="100">
+      <el-table-column label="状态" class-name="status-col">
         <template slot-scope="scope">
-          <!-- <span></span> -->
-          <el-button size="mini" :type="statusArr[scope.row.status]">{{ scope.row.statusText }}</el-button>
+          <el-button size="mini" :type="statusArr[scope.row.status]">{{
+            scope.row.statusText
+          }}</el-button>
         </template>
       </el-table-column>
       <el-table-column
         label="操作"
         align="center"
-        width="400"
+        width="300"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
@@ -281,7 +291,7 @@ export default {
         status: "",
         title: "",
       },
-      statusArr: [ "danger", "warning","success", "primary", "info"]
+      statusArr: ["danger", "warning", "success", "primary", "info"],
     };
   },
   activated() {

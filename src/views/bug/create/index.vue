@@ -7,12 +7,9 @@
         :model="bugInfoForm"
         :rules="bugInforules"
       >
-        <el-form-item label="关联项目">
-          <el-input v-model="bugInfoForm.relationProject"></el-input>
-        </el-form-item>
-        <el-form-item label="关联需求">
+        <!-- <el-form-item label="关联需求">
           <el-input v-model="bugInfoForm.relationDemand"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="标题">
           <el-input v-model="bugInfoForm.title"></el-input>
         </el-form-item>
@@ -21,6 +18,9 @@
             v-model="bugInfoForm.content"
             ref="myQuillEditor"
           ></TuiEditor>
+        </el-form-item>
+        <el-form-item label="备注">
+          <el-input v-model="bugInfoForm.remarks"></el-input>
         </el-form-item>
       </el-form>
       <div class="control" style="margin-top: 30px">
@@ -34,8 +34,20 @@
         label-width="30px"
         :model="bugInfoForm"
       >
+        <el-form-item label="关联项目">
+          <!-- <el-input v-model="bugInfoForm.relationProject"></el-input> -->
+          <el-select v-model="bugInfoForm.relationProject" placeholder="请选择">
+            <el-option
+              v-for="item in projectOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="受理人">
-          <!-- <el-select v-model="bugInfoForm.receiver" placeholder="请选择">
+          <el-select v-model="bugInfoForm.receiver" placeholder="请选择">
             <el-option
               v-for="item in receiverOptions"
               :key="item.value"
@@ -43,8 +55,8 @@
               :value="item.value"
             >
             </el-option>
-          </el-select> -->
-          <el-input v-model="bugInfoForm.receiver"></el-input>
+          </el-select>
+          <!-- <el-input v-model="bugInfoForm.receiver"></el-input> -->
         </el-form-item>
         <el-form-item label="缺陷类型">
           <el-select v-model="bugInfoForm.bugType" placeholder="请选择">
@@ -78,9 +90,6 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="备注">
-          <el-input v-model="bugInfoForm.remarks"></el-input>
-        </el-form-item>
       </el-form>
     </div>
   </div>
@@ -88,6 +97,7 @@
 
 <script>
 import * as API from "@/api";
+import moment from "moment";
 import TuiEditor from "@/components/TuiEditor";
 export default {
   name: "CreateForm",
@@ -197,6 +207,7 @@ export default {
         },
       ],
       receiverOptions: [],
+      projectOptions: [],
       bugInforules: {
         // title: [{ validator: validatePass, trigger: "blur" }],
         // checkPass: [{ validator: validatePass2, trigger: "blur" }],
@@ -205,8 +216,12 @@ export default {
     };
   },
   components: { TuiEditor },
-  mounted() {},
+  mounted() {
+    this.getProjectList();
+    this.getUserList();
+  },
   methods: {
+    moment,
     handleRemove() {
       this.bugInfoForm = {
         relationProject: "",
@@ -239,6 +254,37 @@ export default {
           message: res?.data?.msg || "创建任务失败",
           type: "error",
         });
+      }
+    },
+    async getProjectList() {
+      this.listLoading = true;
+      let res = await API.selectProject({});
+      if (res?.status === 200) {
+        let projectList = res?.data?.projectList || [];
+        projectList?.forEach((item) => {
+          this.projectOptions.push({
+            value: item.projectName,
+            label: item.projectName,
+          });
+        });
+      } else {
+        this.$message.error(res?.data?.msg || "服务器错误");
+      }
+      this.listLoading = false;
+    },
+    async getUserList() {
+      let res = await API.selectUser({});
+      console.log("res: ", res);
+      if (res?.status === 200) {
+        let receiverOptions = res?.data?.userList || [];
+        receiverOptions?.forEach((item) => {
+          this.receiverOptions.push({
+            value: item.username,
+            label: item.username,
+          });
+        });
+      } else {
+        this.$message.error(res?.data?.msg || "服务器错误");
       }
     },
   },

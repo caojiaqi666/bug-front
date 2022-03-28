@@ -95,21 +95,21 @@ const routes = [
         component: () => import("@/views/bug/create/index"),
         name: "创建任务",
       },
-      // {
-      //   path: "myCreate",
-      //   component: () => import("@/views/bug/myCreate/index"),
-      //   name: "我的创建",
-      // },
+      {
+        path: "myCreate",
+        component: () => import("@/views/bug/myCreate/index"),
+        name: "我的创建",
+      },
       {
         path: "allTask",
         component: () => import("@/views/bug/allTask/index"),
         name: "全部任务",
       },
-      // {
-      //   path: "myTask",
-      //   component: () => import("@/views/bug/myTask/index"),
-      //   name: "我的任务",
-      // },
+      {
+        path: "myTask",
+        component: () => import("@/views/bug/myTask/index"),
+        name: "我的任务",
+      },
     ],
   },
   {
