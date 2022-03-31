@@ -219,7 +219,7 @@ import * as API from "@/api";
 import moment from "moment";
 
 export default {
-  name: "Usermanager",
+  name: "BugTable",
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -232,6 +232,9 @@ export default {
     toJobName(id, positionMap) {
       return positionMap.get(id);
     },
+  },
+  props: {
+    type: String,
   },
   data() {
     return {
@@ -337,11 +340,17 @@ export default {
     },
     async getBugsList() {
       this.listLoading = true;
-      let res = await API.selectBug({
+      let params = {
         ...this.searchParams,
         pageNum: this.pageNum,
         pageSize: this.pageSize,
-      });
+      };
+      if (this._props.type == "myCreate") {
+        params.submitter = this.$store?.state?.userInfo.username;
+      } else if (this._props.type == "myTask") {
+        params.receiver = this.$store?.state?.userInfo.username;
+      }
+      let res = await API.selectBug(params);
       this.totalNum = res?.data.total || 0;
       if (res?.status === 200) {
         this.bugsList = res?.data?.bugsList || [];
