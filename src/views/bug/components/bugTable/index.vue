@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
+    <!-- <div class="filter-container">
       <p class="warn-content">管理员能修改所有信息</p>
-    </div>
+    </div> -->
 
     <div class="control">
       <div class="control-item">

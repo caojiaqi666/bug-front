@@ -143,6 +143,16 @@ export const deleteBug = async (data) => {
   });
 };
 
+// 修改bug
+export const changeBug = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/changeBug`,
+    data,
+    withCredentials: true,
+  });
+};
+
 
 // 查询数据看板数据
 export const searchData = async (data) => {

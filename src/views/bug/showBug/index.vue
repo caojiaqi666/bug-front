@@ -8,7 +8,7 @@
       <el-card class="box-card" style="background-color: #8cbda4">
         <el-row>
           <el-col :span="5">
-            <span>项目名: {{ bug.relationProject[0] }}</span>
+            <span>项目名: {{ bug.relationProject }}</span>
           </el-col>
           <el-col :span="5">
             <span>受理人：{{ bug.receiver }}</span>

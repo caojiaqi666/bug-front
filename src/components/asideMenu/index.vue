@@ -70,27 +70,6 @@
           ></router-link
         >
       </el-submenu>
-      <!-- <el-submenu index="3">
-        <template slot="title">
-          <i class="el-icon-crop"></i>
-          <span slot="title">测试管理</span>
-        </template>
-        <el-menu-item index="3-1"
-          ><i class="el-icon-s-flag"></i>提测管理</el-menu-item
-        >
-        <el-menu-item index="3-2"
-          ><i class="el-icon-s-finance"></i>用例管理</el-menu-item
-        >
-        <el-menu-item index="3-2"
-          ><i class="el-icon-menu"></i>测试计划</el-menu-item
-        >
-        <el-menu-item index="3-2"
-          ><i class="el-icon-d-caret"></i>用例评审</el-menu-item
-        >
-        <el-menu-item index="3-2"
-          ><i class="el-icon-share"></i>测试报告</el-menu-item
-        >
-      </el-submenu> -->
       <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-cpu"></i>
