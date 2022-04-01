@@ -138,7 +138,7 @@ export default {
 .menuBox {
   height: 100%;
   background: #304156;
-  // position: fixed;
+  position: fixed;
   overflow-x: hidden !important;
   box-sizing: inherit;
 }

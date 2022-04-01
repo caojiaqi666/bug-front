@@ -14,13 +14,13 @@
             <span>受理人：{{ bug.receiver }}</span>
           </el-col>
           <el-col :span="5">
-            <span>提交时间：{{ bug.createTime }}</span>
+            <span>提交时间：{{ bug.createTimeText }}</span>
           </el-col>
           <el-col :span="4">
-            <span>优先级：{{ bug.priority }}</span>
+            <span>优先级：{{ bug.priorityText }}</span>
           </el-col>
           <el-col :span="4">
-            <span>严重程度：{{ bug.severity }}</span>
+            <span>严重程度：{{ bug.severityText }}</span>
           </el-col>
         </el-row>
       </el-card>
@@ -28,10 +28,10 @@
       <el-card class="box-card" style="background-color: #8cbda4">
         <el-row>
           <el-col :span="5">
-            <span>当前状态: {{ bug.status }}</span>
+            <span>当前状态: {{ bug.statusText }}</span>
           </el-col>
           <el-col :span="5">
-            <span>缺陷类型：{{ bug.bugType }}</span>
+            <span>缺陷类型：{{ bug.bugTypeText }}</span>
           </el-col>
           <el-col :span="5">
             <span>备注：{{ bug.remarks }}</span>
@@ -39,9 +39,9 @@
         </el-row>
       </el-card>
 
-      <div id="main">
+      <div id="main" class="box-card">
         <mavon-editor
-          style="width: 100%; min-height: 10px"
+          style="width: 100%; min-height: 10px; margin: 5px 0;"
           :value="bug.content"
           :box-shadow="false"
           :subfield="false"
@@ -52,16 +52,12 @@
         />
       </div>
       <div
-        v-for="(cc, index) in bug.comments"
+        v-for="(item, index) in bug.comments"
         :key="index"
         style="margin-bottom: 5px"
       >
         <el-card class="box-card">
-          <p>
-            {{ cc.date | parseTime("{y}-{m}-{d} {h}:{i}") }}, 处理人:{{
-              cc.user
-            }}， 事件：{{ cc.info }}
-          </p>
+          <p>处理人:{{ item.user }}， 事件：{{ item.info }}</p>
         </el-card>
       </div>
     </div>
@@ -69,6 +65,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import * as API from "@/api";
 
 export default {
@@ -122,14 +119,39 @@ export default {
     this.fetchData();
   },
   methods: {
+    moment,
     async fetchData() {
       const url = window.location.href;
       const ul = url.split("/");
       const id = ul[ul.length - 1];
       let res = await API.selectBug({ _id: id });
       if (res?.status == 200 && res?.data) {
-        this.bug = res?.data?.bugsList?.[0];
-        console.log("this.bug: ", this.bug);
+        let bugDes = res?.data?.bugsList?.[0];
+        bugDes.createTimeText = moment(+bugDes.createTime).format(
+          "YYYY年MM月DD日 HH:mm"
+        );
+        bugDes.priority = bugDes.priority;
+        const severityArr = ["致命", "严重", "一般", "轻微", "建议"];
+        bugDes.severityText = severityArr[bugDes.severity];
+        const statusArr = ["待处理", "处理中", "已解决", "已驳回", "挂起"];
+        bugDes.statusText = statusArr[bugDes.status];
+        let priorityOptions = ["P0", "P1", "P2", "P3"];
+        bugDes.priorityText = priorityOptions[bugDes.priority];
+        let bugTypeArr = [
+          "功能问题",
+          "界面问题",
+          "兼容问题",
+          "用户体验问题",
+          "接口问题",
+          "性能问题",
+          "安全问题",
+          "环境问题",
+          "程序逻辑错误",
+          "程序校验错误",
+          "安全漏洞",
+        ];
+        bugDes.bugTypeText = bugTypeArr[bugDes.bugType];
+        this.bug = bugDes;
         document.title = this.bug.title;
       }
     },
@@ -170,11 +192,9 @@ export default {
     right: -10px;
     top: 0px;
   }
-}
-</style>
-<style>
-#tinymcecontent img {
-  max-width: 800px;
-  text-align: center;
+  #tinymcecontent img {
+    max-width: 800px;
+    text-align: center;
+  }
 }
 </style>

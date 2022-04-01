@@ -25,6 +25,7 @@ export default {
   flex-direction: row;
   .right {
     width: 100%;
+    padding-left: 200px;
     .wrap {
       margin: 15px 20px;
     }
