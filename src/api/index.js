@@ -33,6 +33,16 @@ export const toLogin = async (data) => {
   });
 };
 
+// 退出登录接口
+export const loginout = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/loginout`,
+    data,
+    withCredentials: true,
+  });
+};
+
 // 注册接口
 export const toRegister = async (data) => {
   return await axios({
@@ -152,7 +162,6 @@ export const changeBug = async (data) => {
     withCredentials: true,
   });
 };
-
 
 // 查询数据看板数据
 export const searchData = async (data) => {

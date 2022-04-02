@@ -70,6 +70,7 @@
 
 <script>
 import router from "@/router/index.js";
+import * as API from "@/api";
 export default {
   name: "NavBar",
   data() {
@@ -85,7 +86,13 @@ export default {
     handleShowPop() {
       this.visible = !this.visible;
     },
-    handleLogOut() {},
+    async handleLogOut() {
+      let res = await API.loginout({});
+      if (res?.data?.state == 0) {
+        this.$store.dispatch("logOut", {});
+        this.$router.push("/login");
+      }
+    },
     getBreadList(val) {
       this.breadList = [];
       // 过滤路由matched对象
@@ -121,7 +128,7 @@ export default {
     //   if (item.path == nowRoute) {
     //   }
     // })
-    let cookieUserInfo = sessionStorage.getItem('userInfo')
+    let cookieUserInfo = sessionStorage.getItem("userInfo");
     if (cookieUserInfo) {
       this.$store.dispatch("login", JSON.parse(cookieUserInfo));
     }
