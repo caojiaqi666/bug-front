@@ -141,5 +141,6 @@ export default {
   position: fixed;
   overflow-x: hidden !important;
   box-sizing: inherit;
+  z-index: 99;
 }
 </style>
