@@ -285,6 +285,9 @@ export default {
       let res = await API.changeInfo({ ...data });
       if (res?.data?.state == 0) {
         this.$message.success(res?.data?.msg || "操作成功");
+
+        let es = await API.postClientIp({ type: 1 });
+        console.log("es: ", es);
       } else {
         this.$message.error(res?.data?.msg || "操作失败");
       }
@@ -293,6 +296,8 @@ export default {
       let res = await API.deleteUser({ _id });
       if (res.status == 200 && res.data.state == 0) {
         this.$message.success(res?.data?.msg);
+        let es = await API.postClientIp({ type: 1 });
+        console.log("es: ", es);
       } else {
         this.$message.error(res?.data?.msg);
       }

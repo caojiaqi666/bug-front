@@ -10,18 +10,14 @@
       :text-color="variables.menuText"
       :active-text-color="variables.menuActiveText"
       mode="vertical"
-    > 
-    
+    >
       <el-submenu index="5">
         <template slot="title">
           <i class="el-icon-s-data"></i>
-          <span slot="title">数据看板</span>
+          <span slot="title"
+            ><router-link to="/databoard/index"> 数据看板</router-link></span
+          >
         </template>
-        <el-menu-item index="5-1">
-          <router-link to="/databoard/index">
-            <i class="el-icon-s-platform"></i>查看数据</router-link
-          ></el-menu-item
-        >
       </el-submenu>
       <el-submenu index="1">
         <template slot="title">
@@ -96,10 +92,18 @@
           ></router-link
         >
       </el-submenu>
-      <el-menu-item index="6">
-        <i class="el-icon-setting"></i>
-        <span slot="title">系统设置</span>
-      </el-menu-item>
+
+      <el-submenu index="6">
+        <template slot="title">
+          <i class="el-icon-setting"></i>
+          <span slot="title">系统设置</span>
+        </template>
+        <router-link to="/system/log"
+          ><el-menu-item index="6-1"
+            ><i class="el-icon-folder-add"></i>日志</el-menu-item
+          ></router-link
+        >
+      </el-submenu>
     </el-menu>
   </div>
 </template>

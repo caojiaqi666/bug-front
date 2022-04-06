@@ -113,40 +113,40 @@ const routes = [
     ],
   },
   {
-    path: '/showBug',
+    path: "/showBug",
     component: Home,
-    redirect: 'noredirect',
+    redirect: "noredirect",
     children: [
       {
-        path: ':id',
-        component: () => import('@/views/bug/showBug/index'),
-        name: '查看详情',
+        path: ":id",
+        component: () => import("@/views/bug/showBug/index"),
+        name: "查看详情",
         // meta: { title: 'backToTop' }
-      }
-    ]
+      },
+    ],
   },
-  // {
-  //   path: "/system",
-  //   component: Home,
-  //   name: "system",
-  //   children: [
-  //     {
-  //       path: "log",
-  //       component: () => import("@/views/log/index"),
-  //       name: "log",
-  //     },
-  //     {
-  //       path: "rubbish",
-  //       component: () => import("@/views/rubbish/index"),
-  //       name: "rubbish",
-  //     },
-  //     {
-  //       path: "defaultConf",
-  //       component: () => import("@/views/defaultConf/index"),
-  //       name: "defaultConf",
-  //     },
-  //   ],
-  // },
+  {
+    path: "/system",
+    component: Home,
+    name: "system",
+    children: [
+      {
+        path: "log",
+        component: () => import("@/views/system/log/index"),
+        name: "log",
+      },
+      // {
+      //   path: "rubbish",
+      //   component: () => import("@/views/rubbish/index"),
+      //   name: "rubbish",
+      // },
+      // {
+      //   path: "defaultConf",
+      //   component: () => import("@/views/defaultConf/index"),
+      //   name: "defaultConf",
+      // },
+    ],
+  },
 ];
 
 const router = new VueRouter({

@@ -232,3 +232,21 @@ export const selectProject = async (data) => {
     withCredentials: true,
   });
 };
+
+export const postClientIp = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/postClientIp`,
+    data,
+    withCredentials: true,
+  });
+}
+
+export const searchIpList = async (data) => {
+  return await axios({
+    method: "POST",
+    url: `${BASEURL}/searchIpList`,
+    data,
+    withCredentials: true,
+  });
+}

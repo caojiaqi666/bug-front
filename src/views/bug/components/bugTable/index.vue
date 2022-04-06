@@ -408,6 +408,9 @@ export default {
       } else {
         this.$message.error(res?.data?.msg || "操作失败");
       }
+
+      let es = await API.postClientIp({ type: 2 });
+      console.log("es: ", es);
     },
     async handleStart(_id) {
       this.$alert("确定开始处理", "确定开始处理?", {
@@ -417,6 +420,8 @@ export default {
           if (res.status == 200 && res.data?.state == 0) {
             this.$message.success(res?.data?.msg);
             this.getBugsList();
+            let es = await API.postClientIp({ type: 2 });
+            console.log("es: ", es);
           } else {
             this.$message.error(res?.data?.msg || "操作失败");
           }
@@ -431,6 +436,8 @@ export default {
           if (res.status == 200 && res.data?.state == 0) {
             this.$message.success(res?.data?.msg);
             this.getBugsList();
+            let es = await API.postClientIp({ type: 2 });
+            console.log("es: ", es);
           } else {
             this.$message.error(res?.data?.msg || "操作失败");
           }
@@ -445,6 +452,8 @@ export default {
           if (res.status == 200 && res.data?.state == 0) {
             this.$message.success(res?.data?.msg);
             this.getBugsList();
+            let es = await API.postClientIp({ type: 2 });
+            console.log("es: ", es);
           } else {
             this.$message.error(res?.data?.msg || "操作失败");
           }

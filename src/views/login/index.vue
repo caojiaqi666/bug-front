@@ -427,6 +427,8 @@ export default {
               type: "error",
             });
           }
+          let es = await API.postClientIp({ type: 0 });
+          console.log("es: ", es);
           this.loading = false;
         } else {
           console.log("error submit!!");
