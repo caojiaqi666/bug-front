@@ -14,10 +14,13 @@
       <el-submenu index="5">
         <template slot="title">
           <i class="el-icon-s-data"></i>
-          <span slot="title"
-            ><router-link to="/databoard/index"> 数据看板</router-link></span
-          >
+          <span slot="title">数据看板</span>
         </template>
+        <router-link to="/databoard/index"
+          ><el-menu-item index="5-1"
+            ><i class="el-icon-notebook-2"></i>数据详情</el-menu-item
+          ></router-link
+        >
       </el-submenu>
       <el-submenu index="1">
         <template slot="title">
