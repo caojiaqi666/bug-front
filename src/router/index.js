@@ -25,24 +25,25 @@ const routes = [
       {
         path: "index",
         component: () => import("@/views/databoard/index"),
-        name: "数据看板1",
+        name: "数据详情",
       },
     ],
   },
   {
     path: "/project",
     component: Home,
+    name: "项目管理",
     redirect: "/project/team",
     children: [
       {
         path: "setting",
         component: () => import("@/views/project/setting/index"),
-        name: "team",
+        name: "设置项目",
       },
       {
         path: "demand",
         component: () => import("@/views/project/demand/index"),
-        name: "demand",
+        name: "需求管理",
       },
     ],
   },
@@ -128,12 +129,12 @@ const routes = [
   {
     path: "/system",
     component: Home,
-    name: "system",
+    name: "系统设置",
     children: [
       {
         path: "log",
         component: () => import("@/views/system/log/index"),
-        name: "log",
+        name: "日志",
       },
       // {
       //   path: "rubbish",

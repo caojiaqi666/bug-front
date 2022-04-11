@@ -146,5 +146,8 @@ export default {
   overflow-x: hidden !important;
   box-sizing: inherit;
   z-index: 99;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
